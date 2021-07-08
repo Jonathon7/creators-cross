@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { CookiesProvider } from "react-cookie";
+import { BrowserRouter as Router } from "react-router-dom";
+import { EasybaseProvider, useEasybase } from "easybase-react";
+import ebconfig from "./ebconfig";
+import routes from "./routes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CookiesProvider>
+      <EasybaseProvider ebconfig={ebconfig}>
+        <Router>{routes}</Router>
+      </EasybaseProvider>
+    </CookiesProvider>
   );
 }
 
