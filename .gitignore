@@ -10,8 +10,6 @@
 
 # production
 /build
-ebconfig.js
-.env
 
 # misc
 .DS_Store
