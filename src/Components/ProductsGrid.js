@@ -17,7 +17,7 @@ export default function ProductsGrid(props) {
     <React.Fragment>
       <Container className={classes.productsGrid}>
         {props.posts.map((post, index) => {
-          return <FeaturedPost post={post} />;
+          return <FeaturedPost post={post} key={index} />;
         })}
       </Container>
     </React.Fragment>
