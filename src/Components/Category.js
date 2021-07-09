@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useEasybase } from "easybase-react";
 import Container from "@material-ui/core/Container";
 import Header from "./Header";
@@ -24,7 +24,7 @@ export default function Category() {
   useEffect(() => {
     configureFrame({ tableName: "PRODUCT", limit: 1 });
     sync();
-  }, []);
+  });
 
   return (
     <React.Fragment>
