@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   card: {
     display: "flex",
     flexDirection: "column",
-    width: 400,
+    width: 325,
     marginTop: 10,
   },
   cardDetails: {

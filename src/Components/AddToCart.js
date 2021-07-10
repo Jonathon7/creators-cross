@@ -32,7 +32,7 @@ export default function AddToCart(props) {
         <Grid
           container
           direction="row"
-          justify="space-between"
+          justifyContent="space-between"
           alignItems="center"
           className={classes.grid}
         >

@@ -11,8 +11,9 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Divider from "@material-ui/core/Divider";
 import AddToCart from "./AddToCart";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   h1: {
     fontWeight: "lighter",
   },
@@ -20,7 +21,9 @@ const useStyles = makeStyles({
     width: 500,
     height: 520,
     marginTop: 30,
-    position: "sticky",
+    [theme.breakpoints.up("lg")]: {
+      position: "sticky",
+    },
     top: 80,
   },
   cardMedia: {
@@ -31,10 +34,7 @@ const useStyles = makeStyles({
     marginTop: 30,
     width: 500,
   },
-  text: {
-    // border: "solid 1px red",
-  },
-});
+}));
 
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
@@ -59,6 +59,7 @@ const product = {
 
 export default function Product() {
   const classes = useStyles();
+  const matches = useMediaQuery("(min-width:600px)");
   return (
     <React.Fragment>
       <CssBaseline />
@@ -67,7 +68,7 @@ export default function Product() {
         <SubcategoryBanner />
       </Container>
       <Container>
-        <Grid container direction="row" justify="space-around">
+        <Grid container direction="row" justifyContent="space-around">
           <Card className={classes.card}>
             <CardMedia
               className={classes.cardMedia}
@@ -83,7 +84,7 @@ export default function Product() {
             <Divider />
             <Typography
               variant="body1"
-              display="inline-block"
+              display="inline"
               className={classes.text}
             >
               {product.description}

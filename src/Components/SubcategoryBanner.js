@@ -26,7 +26,7 @@ export default function SubcategoryBanner() {
         <Grid
           container
           direction="row"
-          justify="space-around"
+          justifyContent="space-around"
           alignItems="center"
           className={classes.grid}
         >

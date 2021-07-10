@@ -14,11 +14,6 @@ const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
   },
-  productsGrid: {
-    display: "flex",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-  },
 }));
 
 const sections = [
@@ -62,9 +57,7 @@ export default function Home() {
           </Grid>
         </main>
       </Container>
-      <Container className={classes.productsGrid}>
-        <ProductsGrid posts={Frame()} />
-      </Container>
+      <ProductsGrid posts={Frame()} />
       <Footer
         title="Footer"
         description="Something here to give the footer a purpose!"
