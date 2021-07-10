@@ -8,11 +8,14 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: "flex",
     flexDirection: "column",
     width: 325,
+    [theme.breakpoints.up("lg")]: {
+      width: 380,
+    },
     marginTop: 10,
   },
   cardDetails: {
@@ -22,7 +25,7 @@ const useStyles = makeStyles({
     height: 300,
     width: "100%",
   },
-});
+}));
 
 export default function FeaturedPost(props) {
   const classes = useStyles();

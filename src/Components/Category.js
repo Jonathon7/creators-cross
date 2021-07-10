@@ -22,7 +22,7 @@ export default function Category() {
   const { Frame, sync, configureFrame } = useEasybase();
 
   useEffect(() => {
-    configureFrame({ tableName: "PRODUCT", limit: 1 });
+    configureFrame({ tableName: "PRODUCT", limit: 10 });
     sync();
   });
 
