@@ -11,7 +11,6 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Divider from "@material-ui/core/Divider";
 import AddToCart from "./AddToCart";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   h1: {
@@ -59,7 +58,6 @@ const product = {
 
 export default function Product() {
   const classes = useStyles();
-  const matches = useMediaQuery("(min-width:600px)");
   return (
     <React.Fragment>
       <CssBaseline />
