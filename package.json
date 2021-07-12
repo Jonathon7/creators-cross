@@ -43,6 +43,7 @@
     ]
   },
   "devServer": {
+    "compress": true,
     "public": "https://creatorscross-jvnct.ondigitalocean.app"
   }
 }
