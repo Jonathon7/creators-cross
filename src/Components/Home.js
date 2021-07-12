@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useEasybase } from "easybase-react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Header from "./Header";
@@ -27,13 +27,19 @@ const mainFeaturedPost = {
 };
 
 export default function Home() {
-  const { Frame, sync, configureFrame } = useEasybase();
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    configureFrame({ tableName: "PRODUCT", limit: 10 });
-    sync();
-  });
-
+    axios
+      .get("/api/products")
+      .then((res) => {
+        console.log(res.data);
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [products.length]);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -41,7 +47,7 @@ export default function Home() {
         <Header title="Creator's Cross" sections={sections} />
         <MainFeaturedPost post={mainFeaturedPost} />
       </Container>
-      <ProductsGrid posts={Frame()} />
+      <ProductsGrid posts={products} header="Featured Products" />
       <Footer
         title="Footer"
         description="Something here to give the footer a purpose!"

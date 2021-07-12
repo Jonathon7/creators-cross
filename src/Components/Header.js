@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useCookies } from "react-cookie";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -30,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const classes = useStyles();
   const { sections, title } = props;
+  const [session, setSession] = useState([]);
+
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   return (
     <React.Fragment>
@@ -48,8 +53,10 @@ export default function Header(props) {
           <SearchIcon />
         </IconButton>
         <Button size="small">Subscribe</Button>
-        <IconButton>
-          <ShoppingCartOutlinedIcon />
+        <IconButton href="/cart">
+          <Badge badgeContent={4} color="secondary">
+            <ShoppingCartOutlinedIcon />
+          </Badge>
         </IconButton>
       </Toolbar>
       <Toolbar

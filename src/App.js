@@ -1,16 +1,12 @@
 import "./App.css";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter as Router } from "react-router-dom";
-import { EasybaseProvider } from "easybase-react";
-import ebconfig from "./ebconfig";
 import routes from "./routes";
 
 function App() {
   return (
     <CookiesProvider>
-      <EasybaseProvider ebconfig={ebconfig}>
-        <Router>{routes}</Router>
-      </EasybaseProvider>
+      <Router>{routes}</Router>
     </CookiesProvider>
   );
 }
