@@ -33,7 +33,6 @@ export default function Home() {
     axios
       .get("/api/products")
       .then((res) => {
-        console.log(res.data);
         setProducts(res.data);
       })
       .catch((err) => {

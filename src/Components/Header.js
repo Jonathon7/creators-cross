@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useCookies } from "react-cookie";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
@@ -32,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const classes = useStyles();
   const { sections, title } = props;
-  const [session, setSession] = useState([]);
-
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   return (
     <React.Fragment>
