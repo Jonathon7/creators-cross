@@ -4,6 +4,7 @@ const client = redis.createClient({
   port: process.env.port,
   password: process.env.password,
 });
+
 const { promisify } = require("util");
 
 client.on("error", function (err) {
