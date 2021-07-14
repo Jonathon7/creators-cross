@@ -1,8 +1,8 @@
 const redis = require("redis");
 const client = redis.createClient({
-  host: process.env.hostname,
-  port: process.env.port,
-  password: process.env.password,
+  url: process.env.REDIS_URL,
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASS,
 });
 
 const { promisify } = require("util");
@@ -23,7 +23,7 @@ module.exports = {
   hgetall,
 };
 
-// Product
+// Product;
 // client.hmset(
 //   "product:Cool#Ring#1",
 //   "name",
