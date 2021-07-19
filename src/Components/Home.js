@@ -39,6 +39,7 @@ export default function Home() {
         console.log(err);
       });
   }, [products.length]);
+
   return (
     <React.Fragment>
       <CssBaseline />

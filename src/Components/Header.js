@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -9,6 +9,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -32,6 +33,14 @@ export default function Header(props) {
   const classes = useStyles();
   const { sections, title } = props;
 
+  const [cartLength, setCartLength] = useState(0);
+
+  useEffect(() => {
+    axios.get("/api/cart").then((res) => {
+      if (!isNaN(res.data)) setCartLength(res.data);
+    });
+  }, [cartLength]);
+
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
@@ -50,7 +59,14 @@ export default function Header(props) {
         </IconButton>
         <Button size="small">Subscribe</Button>
         <IconButton href="/cart">
-          <Badge badgeContent={4} color="secondary">
+          <Badge
+            badgeContent={
+              props.cart && props.cart.length > cartLength
+                ? props.cart.length
+                : cartLength
+            }
+            color="secondary"
+          >
             <ShoppingCartOutlinedIcon />
           </Badge>
         </IconButton>

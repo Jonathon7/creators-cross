@@ -17,10 +17,13 @@ client.on("connect", function () {
 
 const smembers = promisify(client.smembers).bind(client);
 const hgetall = promisify(client.hgetall).bind(client);
+const hset = promisify(client.hset).bind(client);
 
 module.exports = {
+  client,
   smembers,
   hgetall,
+  hset,
 };
 
 // Product;

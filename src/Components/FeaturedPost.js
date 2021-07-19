@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("lg")]: {
       width: 380,
     },
-    marginTop: 10,
+    margin: 10,
   },
   cardDetails: {
     flex: 1,
@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 export default function FeaturedPost(props) {
   const classes = useStyles();
   const { post } = props;
-
   return (
     <Grid item>
       <CardActionArea component="a" href={`/product/${post.name}`}>

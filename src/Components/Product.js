@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Header from "./Header";
 import SubcategoryBanner from "./SubcategoryBanner";
@@ -10,7 +11,9 @@ import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Divider from "@material-ui/core/Divider";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import AddToCart from "./AddToCart";
+import CartItemSummary from "./CartItemSummary";
 
 const useStyles = makeStyles((theme) => ({
   h1: {
@@ -45,36 +48,55 @@ const sections = [
   { title: "Blog", url: "#" },
 ];
 
-const product = {
-  title: "Cool Ring",
-  description:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel maxime eum distinctio rerum ut. Sequi autem, consequatur quas maiores fugiat aperiam quia quae vero? Repudiandae asperiores quae voluptatum recusandae inventore. Voluptate, officiis sed? Accusantium quae sequi quidem ea ratione maiores. Placeat reiciendis nihil totam odit est cum. Nobis ea earum at, itaque sequi non? Voluptate a impedit eos odio. Non! Alias dolorem illum ratione, suscipit est debitis adipisci autem quia? Quo excepturi non inventore cum praesentium et ea magnam laborum! Officiis temporibus modi, accusantium nesciunt praesentium nisi reprehenderit sapiente vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel maxime eum distinctio rerum ut. Sequi autem, consequatur quas maiores fugiat aperiam quia quae vero? Repudiandae asperiores quae voluptatum recusandae inventore. Voluptate, officiis sed? Accusantium quae sequi quidem ea ratione maiores. Placeat reiciendis nihil totam odit est cum. Nobis ea earum at, itaque sequi non? Voluptate a impedit eos odio. Non! Alias dolorem illum ratione, suscipit est debitis adipisci autem quia? Quo excepturi non inventore cum praesentium et ea magnam laborum! Officiis temporibus modi, accusantium nesciunt praesentium nisi reprehenderit sapiente vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel maxime eum distinctio rerum ut. Sequi autem, consequatur quas maiores fugiat aperiam quia quae vero? Repudiandae asperiores quae voluptatum recusandae inventore. Voluptate, officiis sed? Accusantium quae sequi quidem ea ratione maiores. Placeat reiciendis nihil totam odit est cum. Nobis ea earum at, itaque sequi non? Voluptate a impedit eos odio. Non! Alias dolorem illum ratione, suscipit est debitis adipisci autem quia? Quo excepturi non inventore cum praesentium et ea magnam laborum! Officiis temporibus modi, accusantium nesciunt praesentium nisi reprehenderit sapiente vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel maxime eum distinctio rerum ut. Sequi autem, consequatur quas maiores fugiat aperiam quia quae vero? Repudiandae asperiores quae voluptatum recusandae inventore. Voluptate, officiis sed? Accusantium quae sequi quidem ea ratione maiores. Placeat reiciendis nihil totam odit est cum. Nobis ea earum at, itaque sequi non? Voluptate a impedit eos odio. Non! Alias dolorem illum ratione, suscipit est debitis adipisci autem quia? Quo excepturi non inventore cum praesentium et ea magnam laborum! Officiis temporibus modi, accusantium nesciunt praesentium nisi reprehenderit sapiente vel.",
-  image:
-    "https://drive.google.com/uc?export=view&id=1wooI2NrwQwMSm1Z7cOhkK2TsoG1Ut0CR",
-  imageText: "Image Text",
-  price: "$20",
-  link: "name-1",
-};
+let timeout = null;
 
-export default function Product() {
+export default function Product(props) {
   const classes = useStyles();
+  const [product, setProduct] = useState({});
+  const [cart, setCart] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`/api/product/${props.match.params.name}`)
+      .then((res) => {
+        setProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [props.match.params]);
+
+  function toggleModal() {
+    clearTimeout(timeout);
+    setOpen(!open);
+
+    timeout = setTimeout(() => {
+      setOpen(false);
+    }, 6000);
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
       <Container>
-        <Header title="Creator's Cross" sections={sections} />
+        <Header title="Creator's Cross" sections={sections} cart={cart} />
         <SubcategoryBanner />
       </Container>
       <Container>
         <Grid container direction="row" justifyContent="space-around">
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.cardMedia}
-              image={product.image}
-              title={product.imageText}
-            />
-            <AddToCart price={product.price} />
-          </Card>
+          {!product.image ? (
+            <CircularProgress />
+          ) : (
+            <Card className={classes.card}>
+              <CardMedia className={classes.cardMedia} image={product.image} />
+              <AddToCart
+                product={product}
+                setCart={setCart}
+                toggleModal={toggleModal}
+              />
+            </Card>
+          )}
           <Container className={classes.textContainer}>
             <Typography variant="h3" component="h1" className={classes.h1}>
               Product Name
@@ -85,7 +107,7 @@ export default function Product() {
               display="inline"
               className={classes.text}
             >
-              {product.description}
+              {product.desc}
             </Typography>
           </Container>
         </Grid>
@@ -94,6 +116,7 @@ export default function Product() {
         title="Footer"
         description="Something here to give the footer a purpose!"
       />
+      <CartItemSummary open={open} cart={cart} toggleModal={toggleModal} />
     </React.Fragment>
   );
 }

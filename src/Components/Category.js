@@ -6,8 +6,6 @@ import SubcategoryBanner from "./SubcategoryBanner";
 import ProductsGrid from "./ProductsGrid";
 import Footer from "./Footer";
 
-const url = "Creator's Cross";
-
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
   { title: "Rings", url: "/category/rings" },
@@ -35,7 +33,7 @@ export default function Category() {
   return (
     <React.Fragment>
       <Container>
-        <Header title={url} sections={sections} />
+        <Header title={"Creator's Cross"} sections={sections} />
         <SubcategoryBanner />
       </Container>
       <ProductsGrid posts={products} />

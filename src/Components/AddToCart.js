@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
@@ -13,9 +14,7 @@ const useStyles = makeStyles({
     marginLeft: 20,
     marginBottom: 20,
   },
-  grid: {
-    // border: "solid 1px red",
-  },
+  grid: {},
   favorite: {},
   addToCart: {
     width: "100%",
@@ -26,6 +25,23 @@ const useStyles = makeStyles({
 
 export default function AddToCart(props) {
   const classes = useStyles();
+
+  function addCartItem(cartItem) {
+    axios
+      .post("/api/add-cart-item", {
+        name: cartItem.name,
+        price: cartItem.price,
+        image: cartItem.image,
+      })
+      .then((res) => {
+        props.setCart(res.data.cart);
+        props.toggleModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <React.Fragment>
       <Box className={classes.box}>
@@ -37,13 +53,17 @@ export default function AddToCart(props) {
           className={classes.grid}
         >
           <Typography variant="h4" component="p" display="inline">
-            {props.price}
+            ${props.product.price}
           </Typography>
           <IconButton className={classes.favorite}>
             <FavoriteBorderIcon fontSize="large" />
           </IconButton>
         </Grid>
-        <Button variant="outlined" className={classes.addToCart}>
+        <Button
+          variant="outlined"
+          onClick={() => addCartItem(props.product)}
+          className={classes.addToCart}
+        >
           Add To Cart
         </Button>
       </Box>
