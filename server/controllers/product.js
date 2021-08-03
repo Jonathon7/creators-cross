@@ -44,6 +44,14 @@ const getProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
+const getCart = (req, res) => {
+  if (req.session.cart) {
+    res.status(200).json(req.session.cart);
+  } else {
+    res.sendStatus(200);
+  }
+};
+
 const getCartLength = (req, res) => {
   if (req.session.cart) {
     res.status(200).json(req.session.cart.length);
@@ -69,5 +77,6 @@ module.exports = {
   getProducts,
   getProduct,
   addCartItem,
+  getCart,
   getCartLength,
 };

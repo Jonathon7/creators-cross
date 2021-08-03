@@ -36,7 +36,7 @@ export default function Header(props) {
   const [cartLength, setCartLength] = useState(0);
 
   useEffect(() => {
-    axios.get("/api/cart").then((res) => {
+    axios.get("/api/cart-length").then((res) => {
       if (!isNaN(res.data)) setCartLength(res.data);
     });
   }, [cartLength]);

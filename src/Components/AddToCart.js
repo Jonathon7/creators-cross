@@ -27,11 +27,13 @@ export default function AddToCart(props) {
   const classes = useStyles();
 
   function addCartItem(cartItem) {
+    console.log(cartItem);
     axios
       .post("/api/add-cart-item", {
         name: cartItem.name,
         price: cartItem.price,
         image: cartItem.image,
+        category: cartItem.category,
       })
       .then((res) => {
         props.setCart(res.data.cart);

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "./Header";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import CartItem from "./CartItem";
 
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
@@ -14,14 +16,33 @@ const sections = [
 ];
 
 export default function Cart() {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/cart")
+      .then((res) => {
+        if (!Array.isArray(res.data)) return;
+        setCart(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [cart.length]);
+
   return (
     <React.Fragment>
-      <Header title="Creator's Cross" sections={sections} />
       <Container>
-        <Typography variant="h3" component="h1">
+        <Header title="Creator's Cross" sections={sections} />
+        <Typography variant="h4" component="h1">
           Cart
         </Typography>
-        <Typography>There are no items in your cart.</Typography>
+        {!cart.length && (
+          <Typography>There are no items in your cart.</Typography>
+        )}
+        {cart.map((elem, i) => {
+          return <CartItem cartItem={elem} key={i} />;
+        })}
       </Container>
     </React.Fragment>
   );

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("lg")]: {
       width: 380,
     },
-    margin: 10,
+    marginBottom: 20,
   },
   cardDetails: {
     flex: 1,

@@ -41,7 +41,8 @@ app.use(express.static(`${__dirname}/../build`));
 
 app.get("/api/products", product.getProducts);
 app.get("/api/product/:name", product.getProduct);
-app.get("/api/cart", product.getCartLength);
+app.get("/api/cart", product.getCart);
+app.get("/api/cart-length", product.getCartLength);
 app.post("/api/add-cart-item", product.addCartItem);
 
 app.get("*", (req, res) => {
