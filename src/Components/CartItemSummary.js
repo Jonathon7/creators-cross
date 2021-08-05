@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     height: 100,
     width: 100,
   },
+  checkoutButton: {
+    marginLeft: 10,
+  },
 }));
 
 export default function CartItemSummary(props) {
@@ -33,9 +37,19 @@ export default function CartItemSummary(props) {
     >
       <Box className={classes.boxSummary}>
         <Grid container justifyContent="space-between" alignItems="center">
-          <Typography variant="subtitle1" display="inline">
-            Item Added to Cart
-          </Typography>
+          <Box>
+            <Typography variant="subtitle1" display="inline">
+              Item Added to Cart
+            </Typography>
+            <Button
+              href="/cart"
+              variant="outlined"
+              size="small"
+              className={classes.checkoutButton}
+            >
+              Checkout
+            </Button>
+          </Box>
           <IconButton onClick={props.toggleModal}>
             <CloseIcon />
           </IconButton>

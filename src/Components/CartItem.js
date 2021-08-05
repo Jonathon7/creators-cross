@@ -22,11 +22,15 @@ const useStyles = makeStyles(() => ({
 
 export default function CartItem(props) {
   const classes = useStyles();
-  console.log(props);
   return (
     <React.Fragment>
       <Card className={classes.card}>
-        <Grid container direction="row" alignItems="center">
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          className={classes.outerGrid}
+        >
           <CardMedia
             image={props.cartItem.image}
             className={classes.cardMedia}
@@ -36,7 +40,12 @@ export default function CartItem(props) {
             <Typography variant="subtitle1">${props.cartItem.price}</Typography>
             <Box className={classes.box}>
               <Button size="small">Move to Favorites</Button>
-              <Button size="small">Remove</Button>
+              <Button
+                size="small"
+                onClick={() => props.removeCartItem(props.index)}
+              >
+                Remove
+              </Button>
             </Box>
           </Box>
         </Grid>

@@ -23,11 +23,16 @@ const useStyles = makeStyles({
   },
 });
 
+function addToFavorites(favorite) {
+  axios.post("/api/add-favorite", favorite).catch((err) => {
+    console.log(err);
+  });
+}
+
 export default function AddToCart(props) {
   const classes = useStyles();
 
   function addCartItem(cartItem) {
-    console.log(cartItem);
     axios
       .post("/api/add-cart-item", {
         name: cartItem.name,
@@ -57,7 +62,10 @@ export default function AddToCart(props) {
           <Typography variant="h4" component="p" display="inline">
             ${props.product.price}
           </Typography>
-          <IconButton className={classes.favorite}>
+          <IconButton
+            className={classes.favorite}
+            onClick={() => addToFavorites(props.product)}
+          >
             <FavoriteBorderIcon fontSize="large" />
           </IconButton>
         </Grid>

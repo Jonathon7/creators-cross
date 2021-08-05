@@ -1,4 +1,4 @@
-const { smembers, hgetall, hset } = require("../db");
+const { smembers, hgetall } = require("../db");
 
 const getProducts = async (req, res) => {
   const products = [];
@@ -73,10 +73,16 @@ const addCartItem = (req, res) => {
   res.status(200).json({ cart: req.session.cart, total: req.session.total });
 };
 
+const removeCartItem = (req, res) => {
+  req.session.cart.splice(req.params.index, 1);
+  res.status(200).json(req.session.cart);
+};
+
 module.exports = {
   getProducts,
   getProduct,
   addCartItem,
   getCart,
   getCartLength,
+  removeCartItem,
 };

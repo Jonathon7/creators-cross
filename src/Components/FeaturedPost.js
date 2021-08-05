@@ -12,14 +12,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     display: "flex",
     flexDirection: "column",
-    width: 325,
-    [theme.breakpoints.up("lg")]: {
-      width: 380,
-    },
     marginBottom: 20,
-  },
-  cardDetails: {
-    flex: 1,
   },
   cardMedia: {
     height: 300,
@@ -31,7 +24,7 @@ export default function FeaturedPost(props) {
   const classes = useStyles();
   const { post } = props;
   return (
-    <Grid item>
+    <Grid item xs={9} sm={6} md={4}>
       <CardActionArea component="a" href={`/product/${post.name}`}>
         <Card className={classes.card}>
           <CardMedia className={classes.cardMedia} image={post.image} />
