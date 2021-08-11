@@ -27,8 +27,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CartItemSummary(props) {
+export default function SummaryModal(props) {
   const classes = useStyles();
+
   return (
     <Modal
       open={props.open}
@@ -39,7 +40,7 @@ export default function CartItemSummary(props) {
         <Grid container justifyContent="space-between" alignItems="center">
           <Box>
             <Typography variant="subtitle1" display="inline">
-              Item Added to Cart
+              Item added to cart
             </Typography>
             <Button
               href="/cart"
@@ -47,7 +48,7 @@ export default function CartItemSummary(props) {
               size="small"
               className={classes.checkoutButton}
             >
-              Checkout
+              checkout
             </Button>
           </Box>
           <IconButton onClick={props.toggleModal}>

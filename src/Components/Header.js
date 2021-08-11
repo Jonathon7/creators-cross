@@ -33,13 +33,15 @@ export default function Header(props) {
   const classes = useStyles();
   const { sections, title } = props;
 
-  const [cartLength, setCartLength] = useState(0);
+  const [cartLength, setCartLength] = useState(null);
 
   useEffect(() => {
-    axios.get("/api/cart-length").then((res) => {
-      if (!isNaN(res.data)) setCartLength(res.data);
-    });
-  }, [cartLength]);
+    if (!props.cart) {
+      axios.get("/api/cart-length").then((res) => {
+        if (!isNaN(res.data)) setCartLength(res.data);
+      });
+    }
+  }, [cartLength, props.cart]);
 
   return (
     <React.Fragment>
@@ -61,9 +63,7 @@ export default function Header(props) {
         <IconButton href="/cart">
           <Badge
             badgeContent={
-              props.cart && props.cart.length > cartLength
-                ? props.cart.length
-                : cartLength
+              cartLength ? cartLength : props.cart ? props.cart.length : null
             }
             color="secondary"
           >

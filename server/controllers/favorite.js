@@ -18,7 +18,9 @@ const addFavorite = (req, res) => {
 };
 
 const favoriteToCart = (req, res) => {
-  console.log(req.body);
+  if (!req.session.cart) {
+    req.session.cart = [];
+  }
   req.session.cart.push(req.body.favorite);
   req.session.favorites.splice(req.body.index, 1);
 

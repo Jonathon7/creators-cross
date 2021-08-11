@@ -39,7 +39,14 @@ export default function CartItem(props) {
             <Typography variant="subtitle1">{props.cartItem.name}</Typography>
             <Typography variant="subtitle1">${props.cartItem.price}</Typography>
             <Box className={classes.box}>
-              <Button size="small">Move to Favorites</Button>
+              <Button
+                size="small"
+                onClick={() =>
+                  props.cartToFavorites(props.cartItem, props.index)
+                }
+              >
+                Move to Favorites
+              </Button>
               <Button
                 size="small"
                 onClick={() => props.removeCartItem(props.index)}

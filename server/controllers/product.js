@@ -78,6 +78,16 @@ const removeCartItem = (req, res) => {
   res.status(200).json(req.session.cart);
 };
 
+const cartToFavorites = (req, res) => {
+  if (!req.session.favorites) {
+    req.session.favorites = [];
+  }
+  req.session.favorites.push(req.body.cartItem);
+  req.session.cart.splice(req.body.index, 1);
+
+  res.status(200).json(req.session.cart);
+};
+
 module.exports = {
   getProducts,
   getProduct,
@@ -85,4 +95,5 @@ module.exports = {
   getCart,
   getCartLength,
   removeCartItem,
+  cartToFavorites,
 };

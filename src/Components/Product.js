@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
+import Image from "material-ui-image";
 import Header from "./Header";
 import SubcategoryBanner from "./SubcategoryBanner";
 import Footer from "./Footer";
@@ -9,28 +10,22 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import Divider from "@material-ui/core/Divider";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import AddToCart from "./AddToCart";
-import CartItemSummary from "./CartItemSummary";
+import SummaryModal from "./SummaryModal";
 
 const useStyles = makeStyles((theme) => ({
   h1: {
     fontWeight: "lighter",
   },
   card: {
-    width: 500,
-    height: 520,
+    width: 450,
+    height: "fit-content",
     marginTop: 30,
     [theme.breakpoints.up("lg")]: {
       position: "sticky",
     },
     top: 80,
-  },
-  cardMedia: {
-    height: 400,
-    width: "100%",
   },
   textContainer: {
     marginTop: 30,
@@ -50,10 +45,21 @@ const sections = [
 
 let timeout = null;
 
+const checkIfFavorited = async (item) => {
+  const favorites = await axios.get("/api/favorites");
+
+  for (let i = 0; i < favorites.length; i++) {
+    if ((favorites[i].name = item.name)) return true;
+  }
+
+  return false;
+};
+
 export default function Product(props) {
   const classes = useStyles();
   const [product, setProduct] = useState({});
   const [cart, setCart] = useState([]);
+  const [isFavorited, setIsFavorited] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -65,7 +71,18 @@ export default function Product(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, [props.match.params]);
+
+    axios
+      .get("/api/cart")
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setCart(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   function toggleModal() {
     clearTimeout(timeout);
@@ -85,18 +102,15 @@ export default function Product(props) {
       </Container>
       <Container>
         <Grid container direction="row" justifyContent="space-around">
-          {!product.image ? (
-            <CircularProgress />
-          ) : (
-            <Card className={classes.card}>
-              <CardMedia className={classes.cardMedia} image={product.image} />
-              <AddToCart
-                product={product}
-                setCart={setCart}
-                toggleModal={toggleModal}
-              />
-            </Card>
-          )}
+          <Card className={classes.card}>
+            <Image src={product.image} />
+            <AddToCart
+              product={product}
+              setCart={setCart}
+              toggleModal={toggleModal}
+              isFavorited={isFavorited}
+            />
+          </Card>
           <Container className={classes.textContainer}>
             <Typography variant="h3" component="h1" className={classes.h1}>
               Product Name
@@ -116,7 +130,7 @@ export default function Product(props) {
         title="Footer"
         description="Something here to give the footer a purpose!"
       />
-      <CartItemSummary open={open} cart={cart} toggleModal={toggleModal} />
+      <SummaryModal open={open} cart={cart} toggleModal={toggleModal} />
     </React.Fragment>
   );
 }

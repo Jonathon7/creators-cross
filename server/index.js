@@ -46,6 +46,7 @@ app.get("/api/cart", product.getCart);
 app.get("/api/cart-length", product.getCartLength);
 app.post("/api/add-cart-item", product.addCartItem);
 app.delete("/api/remove-cart-item/:index", product.removeCartItem);
+app.post("/api/cart-to-favorites", product.cartToFavorites);
 
 app.post("/api/favorites-to-cart", favorite.favoriteToCart);
 app.get("/api/favorites", favorite.getFavorites);

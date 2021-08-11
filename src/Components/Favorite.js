@@ -57,7 +57,6 @@ export default function Favorite() {
     axios
       .post("/api/favorites-to-cart", { favorite, index })
       .then((res) => {
-        console.log(res.data.favorites);
         setFavorites(res.data.favorites);
         setCart(res.data.cart);
       })

@@ -50,10 +50,21 @@ export default function Cart() {
       });
   }
 
+  function cartToFavorites(cartItem, index) {
+    axios
+      .post("/api/cart-to-favorites", { cartItem, index })
+      .then((res) => {
+        setCart(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <React.Fragment>
       <Container>
-        <Header title="Creator's Cross" sections={sections} />
+        <Header title="Creator's Cross" sections={sections} cart={cart} />
         <Typography variant="h5" component="h1" className={classes.title}>
           Cart
         </Typography>
@@ -66,6 +77,7 @@ export default function Cart() {
               cartItem={elem}
               key={i}
               index={i}
+              cartToFavorites={cartToFavorites}
               removeCartItem={removeCartItem}
             />
           );
