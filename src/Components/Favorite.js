@@ -51,7 +51,7 @@ export default function Favorite() {
       .catch((err) => {
         console.log(err);
       });
-  }, [favorites.length, cart.length]);
+  }, []);
 
   function favoriteToCart(favorite, index) {
     axios
@@ -59,6 +59,17 @@ export default function Favorite() {
       .then((res) => {
         setFavorites(res.data.favorites);
         setCart(res.data.cart);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function removeFavorite(index) {
+    axios
+      .delete(`/api/remove-favorite/${index}`)
+      .then((res) => {
+        setFavorites(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -86,6 +97,7 @@ export default function Favorite() {
                 favorite={favorite}
                 index={index}
                 favoriteToCart={favoriteToCart}
+                removeFavorite={removeFavorite}
               />
             );
           })}

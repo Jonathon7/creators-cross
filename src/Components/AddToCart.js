@@ -30,7 +30,6 @@ function addToFavorites(favorite) {
 }
 
 export default function AddToCart(props) {
-  console.log(props.isFavorited);
   const classes = useStyles();
 
   function addCartItem(cartItem) {

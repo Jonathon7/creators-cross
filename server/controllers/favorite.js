@@ -29,8 +29,15 @@ const favoriteToCart = (req, res) => {
     .json({ cart: req.session.cart, favorites: req.session.favorites });
 };
 
+const removeFavorite = (req, res) => {
+  req.session.favorites.splice(req.params.index, 1);
+
+  res.status(200).json(req.session.favorites);
+};
+
 module.exports = {
   getFavorites,
   addFavorite,
   favoriteToCart,
+  removeFavorite,
 };

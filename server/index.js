@@ -9,6 +9,7 @@ require("dotenv").config();
 const db = require("./db");
 const product = require("./controllers/product");
 const favorite = require("./controllers/favorite");
+const checkout = require("./controllers/checkout");
 
 app.use(bodyParser.json());
 
@@ -29,6 +30,7 @@ app.use(
       httpOnly: false, // if true prevent client side JS from reading the cookie
       maxAge: 1000 * 60 * 10 * 2, // session max age in miliseconds
     },
+    sameSite: "Strict",
   })
 );
 
@@ -41,6 +43,7 @@ app.use(express.static(`${__dirname}/../build`));
 
 app.get("/api/products", product.getProducts);
 app.get("/api/product/:name", product.getProduct);
+app.get("/api/products/:category", product.getProductByCategory);
 
 app.get("/api/cart", product.getCart);
 app.get("/api/cart-length", product.getCartLength);
@@ -51,6 +54,11 @@ app.post("/api/cart-to-favorites", product.cartToFavorites);
 app.post("/api/favorites-to-cart", favorite.favoriteToCart);
 app.get("/api/favorites", favorite.getFavorites);
 app.post("/api/add-favorite", favorite.addFavorite);
+app.delete("/api/remove-favorite/:index", favorite.removeFavorite);
+
+app.get("/api/shipping-information", checkout.getShippingInformation);
+app.post("/create-payment-intent", checkout.createPaymentIntent);
+app.post("/api/shipping-information", checkout.saveShippingInformation);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));

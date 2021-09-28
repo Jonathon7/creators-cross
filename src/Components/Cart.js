@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import Header from "./Header";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
 import CartItem from "./CartItem";
 
 const useStyles = makeStyles(() => ({
   title: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  button: {
     marginTop: 20,
     marginBottom: 20,
   },
@@ -71,17 +77,29 @@ export default function Cart() {
         {!cart.length && (
           <Typography>There are no items in your cart.</Typography>
         )}
-        {cart.map((elem, i) => {
-          return (
-            <CartItem
-              cartItem={elem}
-              key={i}
-              index={i}
-              cartToFavorites={cartToFavorites}
-              removeCartItem={removeCartItem}
-            />
-          );
-        })}
+
+        {cart.length ? (
+          <Button
+            variant="contained"
+            className={classes.button}
+            href="/checkout"
+          >
+            Checkout
+          </Button>
+        ) : null}
+        <Grid>
+          {cart.map((elem, i) => {
+            return (
+              <CartItem
+                cartItem={elem}
+                key={i}
+                index={i}
+                cartToFavorites={cartToFavorites}
+                removeCartItem={removeCartItem}
+              />
+            );
+          })}
+        </Grid>
       </Container>
     </React.Fragment>
   );

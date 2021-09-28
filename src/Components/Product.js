@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "material-ui-image";
 import Header from "./Header";
 import SubcategoryBanner from "./SubcategoryBanner";
 import Footer from "./Footer";
@@ -9,6 +8,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
 import AddToCart from "./AddToCart";
@@ -31,6 +31,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 30,
     width: 500,
   },
+  imageBox: {
+    width: "100%",
+    height: 400,
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
 
 const sections = [
@@ -45,22 +51,12 @@ const sections = [
 
 let timeout = null;
 
-const checkIfFavorited = async (item) => {
-  const favorites = await axios.get("/api/favorites");
-
-  for (let i = 0; i < favorites.length; i++) {
-    if ((favorites[i].name = item.name)) return true;
-  }
-
-  return false;
-};
-
 export default function Product(props) {
-  const classes = useStyles();
   const [product, setProduct] = useState({});
   const [cart, setCart] = useState([]);
-  const [isFavorited, setIsFavorited] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const classes = useStyles();
 
   useEffect(() => {
     axios
@@ -82,7 +78,7 @@ export default function Product(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [props.match.params.name]);
 
   function toggleModal() {
     clearTimeout(timeout);
@@ -103,12 +99,13 @@ export default function Product(props) {
       <Container>
         <Grid container direction="row" justifyContent="space-around">
           <Card className={classes.card}>
-            <Image src={product.image} />
+            <Box className={classes.imageBox}>
+              <img src={product.image} alt={product.name} />
+            </Box>
             <AddToCart
               product={product}
               setCart={setCart}
               toggleModal={toggleModal}
-              isFavorited={isFavorited}
             />
           </Card>
           <Container className={classes.textContainer}>

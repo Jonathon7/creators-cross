@@ -1,4 +1,4 @@
-const { smembers, hgetall } = require("../db");
+const { smembers, hgetall, hget } = require("../db");
 
 const getProducts = async (req, res) => {
   const products = [];
@@ -42,6 +42,23 @@ const getProduct = async (req, res) => {
   });
 
   res.status(200).json(product);
+};
+
+const getProductByCategory = async (req, res) => {
+  const products = await smembers("product").catch((err) => console.log(err));
+  const productsByCategory = [];
+
+  for (let i = 0; i < products.length; i++) {
+    const category = await hget(products[i], "category");
+    if (category === req.params.category) {
+      const product = await hgetall(products[i]).catch((err) =>
+        console.log(err)
+      );
+      productsByCategory.push(product);
+    }
+  }
+
+  res.status(200).json(productsByCategory);
 };
 
 const getCart = (req, res) => {
@@ -96,4 +113,5 @@ module.exports = {
   getCartLength,
   removeCartItem,
   cartToFavorites,
+  getProductByCategory,
 };

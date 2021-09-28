@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "material-ui-image";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
@@ -16,7 +15,6 @@ const useStyles = makeStyles(() => ({
     width: 400,
   },
   innerGrid: {
-    // width: 300,
     marginTop: 10,
   },
   category: {
@@ -25,6 +23,12 @@ const useStyles = makeStyles(() => ({
   button: {
     marginTop: 5,
   },
+  imageBox: {
+    width: "100%",
+    height: 400,
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
 
 export default function FavoritedItem(props) {
@@ -32,7 +36,9 @@ export default function FavoritedItem(props) {
   return (
     <Grid item xs={10} sm={4} className={classes.outerGrid}>
       <Paper className={classes.card} variant="outlined">
-        <Image src={props.favorite.image} />
+        <Box className={classes.imageBox}>
+          <img src={props.favorite.image} alt={props.favorite.name} />
+        </Box>
       </Paper>
       <Grid
         container
@@ -47,13 +53,21 @@ export default function FavoritedItem(props) {
         </Box>
         <Typography>${props.favorite.price}</Typography>
       </Grid>
-      <Button
-        variant="outlined"
-        className={classes.button}
-        onClick={() => props.favoriteToCart(props.favorite, props.index)}
-      >
-        Add to Cart
-      </Button>
+      <Grid container justifyContent="space-between">
+        <Button
+          variant="outlined"
+          className={classes.button}
+          onClick={() => props.favoriteToCart(props.favorite, props.index)}
+        >
+          Add to Cart
+        </Button>
+        <Button
+          className={classes.button}
+          onClick={() => props.removeFavorite(props.index)}
+        >
+          Remove Favorite
+        </Button>
+      </Grid>
     </Grid>
   );
 }

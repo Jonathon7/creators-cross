@@ -5,6 +5,7 @@ import Header from "./Header";
 import SubcategoryBanner from "./SubcategoryBanner";
 import ProductsGrid from "./ProductsGrid";
 import Footer from "./Footer";
+import Typography from "@material-ui/core/Typography";
 
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
@@ -16,19 +17,19 @@ const sections = [
   { title: "Blog", url: "#" },
 ];
 
-export default function Category() {
+export default function Category(props) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     axios
-      .get("/api/products")
+      .get(`/api/products/${props.match.params.category}`)
       .then((res) => {
         setProducts(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [products.length]);
+  }, [products.length, props.match.params.category]);
 
   return (
     <React.Fragment>
@@ -36,7 +37,15 @@ export default function Category() {
         <Header title={"Creator's Cross"} sections={sections} />
         <SubcategoryBanner />
       </Container>
-      <ProductsGrid posts={products} />
+      {products.length ? (
+        <ProductsGrid posts={products} />
+      ) : (
+        <Container style={{ textAlign: "center", paddingTop: 20 }}>
+          <Typography component="h1" variant="h5">
+            Not Currently Available
+          </Typography>
+        </Container>
+      )}
       <Footer
         title="Footer"
         description="Something here to give the footer a purpose!"

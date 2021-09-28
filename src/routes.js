@@ -5,6 +5,7 @@ import Category from "./Components/Category";
 import Product from "./Components/Product";
 import Cart from "./Components/Cart";
 import Favorite from "./Components/Favorite";
+import Checkout from "./Components/Checkout";
 
 export default (
   <Switch>
@@ -13,5 +14,6 @@ export default (
     <Route path="/product/:name" component={Product} />
     <Route path="/cart" component={Cart} />
     <Route path="/favorite" component={Favorite} />
+    <Route path="/checkout" component={Checkout} />
   </Switch>
 );

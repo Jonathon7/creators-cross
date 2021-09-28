@@ -9,8 +9,8 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(() => ({
   card: {
-    width: "50vw",
     marginBottom: 10,
+    padding: 10,
   },
   cardMedia: { height: 200, width: 200 },
   box: {
