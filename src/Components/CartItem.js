@@ -31,10 +31,7 @@ export default function CartItem(props) {
           alignItems="center"
           className={classes.outerGrid}
         >
-          <CardMedia
-            image={props.cartItem.image}
-            className={classes.cardMedia}
-          />
+          <CardMedia image={props.cartItem.url} className={classes.cardMedia} />
           <Box>
             <Typography variant="subtitle1">{props.cartItem.name}</Typography>
             <Typography variant="subtitle1">${props.cartItem.price}</Typography>

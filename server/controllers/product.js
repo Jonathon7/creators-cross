@@ -1,64 +1,37 @@
-const { smembers, hgetall, hget } = require("../db");
+const { pool } = require("../db");
 
 const getProducts = async (req, res) => {
-  const products = [];
+  const sql = `SELECT * FROM product`;
 
-  // retrieves set that contains every unique product name
-  const set = await smembers("product").catch((err) => {
-    console.log(err);
+  pool.query(sql, (error, result) => {
+    if (error) throw error;
+
+    res.status(200).json(result);
   });
-
-  // retrieves every hash table with a key matching the unique product name
-  for (let i = 0; i < set.length; i++) {
-    // only want to match values and not field names
-    if (!set[i].includes(":")) continue;
-
-    const product = await hgetall(set[i]).catch((error) => {
-      console.log(error);
-    });
-    products.push(product);
-  }
-
-  res.status(200).json(products);
 };
 
 const getProduct = async (req, res) => {
-  let productName = req.params.name;
+  let { id } = req.params;
 
-  // adds the hashtags to the product name
-  for (let i = 0; i < req.params.name.length; i++) {
-    if (req.params.name[i] === " ") {
-      productName =
-        productName.substring(0, i) +
-        "#" +
-        productName.substring(i + 1, productName.length);
-    }
-  }
+  const sql = `SELECT * FROM product WHERE product_id = '${id}'`;
 
-  productName = "product:" + productName;
+  pool.query(sql, (error, result) => {
+    if (error) throw error;
 
-  const product = await hgetall(productName).catch((err) => {
-    console.log(err);
+    res.status(200).json(result);
   });
-
-  res.status(200).json(product);
 };
 
-const getProductByCategory = async (req, res) => {
-  const products = await smembers("product").catch((err) => console.log(err));
-  const productsByCategory = [];
+const getProductsByCategory = async (req, res) => {
+  const { category } = req.params;
 
-  for (let i = 0; i < products.length; i++) {
-    const category = await hget(products[i], "category");
-    if (category === req.params.category) {
-      const product = await hgetall(products[i]).catch((err) =>
-        console.log(err)
-      );
-      productsByCategory.push(product);
-    }
-  }
+  const sql = `SELECT * FROM product WHERE category_id = (SELECT category_id FROM category WHERE name = '${category}')`;
 
-  res.status(200).json(productsByCategory);
+  pool.query(sql, (error, result) => {
+    if (error) throw error;
+
+    res.status(200).json(result);
+  });
 };
 
 const getCart = (req, res) => {
@@ -113,5 +86,5 @@ module.exports = {
   getCartLength,
   removeCartItem,
   cartToFavorites,
-  getProductByCategory,
+  getProductsByCategory,
 };

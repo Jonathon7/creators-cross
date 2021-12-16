@@ -1,28 +1,33 @@
+require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const app = express();
 const port = 3002;
-const bodyParser = require("body-parser");
+const { json } = require("body-parser");
 const session = require("express-session");
-let RedisStore = require("connect-redis")(session);
-require("dotenv").config();
-const db = require("./db");
+const mysql = require("mysql2/promise");
+const MySQLStore = require("express-mysql-session")(session);
 const product = require("./controllers/product");
 const favorite = require("./controllers/favorite");
 const checkout = require("./controllers/checkout");
 
-app.use(bodyParser.json());
+app.use(json());
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+const options = {
+  socketPath: process.env.SOCKET_PATH,
+  user: process.env.USER,
+  password: process.env.PASS,
+  database: process.env.DATABASE,
+  connectionLimit: 10,
+};
+
+const pool = mysql.createPool(options);
+const sessionStore = new MySQLStore(options, pool);
 
 app.use(
   session({
-    store: new RedisStore({ client: db.client }),
-    secret: process.env.SESSION_PASS,
+    store: sessionStore,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -36,14 +41,9 @@ app.use(
 
 app.use(express.static(`${__dirname}/../build`));
 
-// app.get("*", (req, res) => {
-//   req.session.destroy();
-//   console.log("DESTROYED");
-// });
-
 app.get("/api/products", product.getProducts);
-app.get("/api/product/:name", product.getProduct);
-app.get("/api/products/:category", product.getProductByCategory);
+app.get("/api/product/:id", product.getProduct);
+app.get("/api/products/:category", product.getProductsByCategory);
 
 app.get("/api/cart", product.getCart);
 app.get("/api/cart-length", product.getCartLength);

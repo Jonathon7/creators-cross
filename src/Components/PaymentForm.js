@@ -59,7 +59,6 @@ export default function PaymentForm(props) {
   }, [cart.length, props.history]);
 
   const pay = async () => {
-    return;
     if (!stripe || !elements) {
     }
 

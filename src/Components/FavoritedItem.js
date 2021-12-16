@@ -37,7 +37,7 @@ export default function FavoritedItem(props) {
     <Grid item xs={10} sm={4} className={classes.outerGrid}>
       <Paper className={classes.card} variant="outlined">
         <Box className={classes.imageBox}>
-          <img src={props.favorite.image} alt={props.favorite.name} />
+          <img src={props.favorite.url} alt={props.favorite.name} />
         </Box>
       </Paper>
       <Grid

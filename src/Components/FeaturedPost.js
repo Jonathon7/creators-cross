@@ -25,13 +25,14 @@ const useStyles = makeStyles(() => ({
 export default function FeaturedPost(props) {
   const classes = useStyles();
   const { post } = props;
+
   return (
     <Grid item xs={12} sm={6} md={4}>
       {post && (
-        <CardActionArea component="a" href={`/product/${post.name}`}>
+        <CardActionArea component="a" href={`/product/${post.product_id}`}>
           <Card className={classes.card}>
             <Box className={classes.imageBox}>
-              <img src={post.image} alt={post.name} />
+              <img src={post.url} alt={post.name} />
             </Box>
             <div>
               <CardContent>
@@ -39,7 +40,9 @@ export default function FeaturedPost(props) {
                   {post.name}
                 </Typography>
                 <Typography variant="subtitle1" paragraph>
-                  {post.desc.substring(0, 100) + " ..."}
+                  {post.description.length > 99
+                    ? post.description.substring(0, 100) + " ..."
+                    : post.description}
                 </Typography>
               </CardContent>
             </div>

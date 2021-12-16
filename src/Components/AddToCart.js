@@ -37,7 +37,7 @@ export default function AddToCart(props) {
       .post("/api/add-cart-item", {
         name: cartItem.name,
         price: cartItem.price,
-        image: cartItem.image,
+        url: cartItem.url,
         category: cartItem.category,
       })
       .then((res) => {

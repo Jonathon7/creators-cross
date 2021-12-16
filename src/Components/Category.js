@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Container from "@material-ui/core/Container";
 import Header from "./Header";
-import SubcategoryBanner from "./SubcategoryBanner";
 import ProductsGrid from "./ProductsGrid";
 import Footer from "./Footer";
 import Typography from "@material-ui/core/Typography";
@@ -35,7 +34,6 @@ export default function Category(props) {
     <React.Fragment>
       <Container>
         <Header title={"Creator's Cross"} sections={sections} />
-        <SubcategoryBanner />
       </Container>
       {products.length ? (
         <ProductsGrid posts={products} />
@@ -46,10 +44,7 @@ export default function Category(props) {
           </Typography>
         </Container>
       )}
-      <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      />
+      <Footer title="Creator's Cross" description="" />
     </React.Fragment>
   );
 }

@@ -6,6 +6,7 @@ import Header from "./Header";
 import MainFeaturedPost from "./MainFeaturedPost";
 import ProductsGrid from "./ProductsGrid";
 import Footer from "./Footer";
+import hero from "../assets/bracelet_hero.jpg";
 
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
@@ -18,10 +19,10 @@ const sections = [
 ];
 
 const mainFeaturedPost = {
-  title: "Creator's Cross Jewelry and Crosses!",
+  title: "Creator's Cross Jewelry",
   description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: "https://source.unsplash.com/random",
+    "Every piece is made from vintage silver-plated or sterling silver flatware. Our selection is all hand-made unique or custom designs.",
+  image: hero,
   imgText: "main image description",
   linkText: "Continue reading…",
 };
@@ -48,10 +49,7 @@ export default function Home() {
         <MainFeaturedPost post={mainFeaturedPost} />
       </Container>
       <ProductsGrid posts={products} header="Featured Products" />
-      <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      />
+      <Footer title="Creator's Cross" description="" />
     </React.Fragment>
   );
 }

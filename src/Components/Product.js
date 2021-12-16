@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Header from "./Header";
-import SubcategoryBanner from "./SubcategoryBanner";
 import Footer from "./Footer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -60,9 +59,9 @@ export default function Product(props) {
 
   useEffect(() => {
     axios
-      .get(`/api/product/${props.match.params.name}`)
+      .get(`/api/product/${props.match.params.id}`)
       .then((res) => {
-        setProduct(res.data);
+        setProduct(res.data[0]);
       })
       .catch((err) => {
         console.log(err);
@@ -71,6 +70,7 @@ export default function Product(props) {
     axios
       .get("/api/cart")
       .then((res) => {
+        console.log(res.data);
         if (Array.isArray(res.data)) {
           setCart(res.data);
         }
@@ -78,7 +78,7 @@ export default function Product(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, [props.match.params.name]);
+  }, [props.match.params.id]);
 
   function toggleModal() {
     clearTimeout(timeout);
@@ -94,13 +94,12 @@ export default function Product(props) {
       <CssBaseline />
       <Container>
         <Header title="Creator's Cross" sections={sections} cart={cart} />
-        <SubcategoryBanner />
       </Container>
       <Container>
         <Grid container direction="row" justifyContent="space-around">
           <Card className={classes.card}>
             <Box className={classes.imageBox}>
-              <img src={product.image} alt={product.name} />
+              <img src={product.url} alt={product.name} />
             </Box>
             <AddToCart
               product={product}
@@ -118,15 +117,12 @@ export default function Product(props) {
               display="inline"
               className={classes.text}
             >
-              {product.desc}
+              {product.description}
             </Typography>
           </Container>
         </Grid>
       </Container>
-      <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      />
+      <Footer title="Creator's Cross" description="" />
       <SummaryModal open={open} cart={cart} toggleModal={toggleModal} />
     </React.Fragment>
   );

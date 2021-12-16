@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundImage: "url(../assets/bracelet_hero.jpg)",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: "rgba(0,0,0,.3)",
+    backgroundColor: "rgba(0,0,0,.5)",
   },
   mainFeaturedPostContent: {
     position: "relative",
@@ -41,15 +41,14 @@ export default function MainFeaturedPost(props) {
   return (
     <Paper
       className={classes.mainFeaturedPost}
-      style={{ backgroundImage: `url(${post.image})` }}
+      style={{
+        background: "#fff",
+        backgroundImage: `url(${post.image})`,
+        backgroundSize: "auto 400px",
+        backgroundRepeat: "no-repeat",
+        minHeight: 400,
+      }}
     >
-      {
-        <img
-          style={{ display: "none" }}
-          src={post.image}
-          alt={post.imageText}
-        />
-      }
       <div className={classes.overlay} />
       <Grid container>
         <Grid item md={6}>

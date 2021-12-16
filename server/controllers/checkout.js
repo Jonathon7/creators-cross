@@ -1,5 +1,5 @@
 const stripe = require("stripe")(process.env.SK_LIVE);
-const { hset, hgetall } = require("../db");
+const { pool } = require("../db");
 
 const calculateOrderAmount = (cart) => {
   let amount = 0;

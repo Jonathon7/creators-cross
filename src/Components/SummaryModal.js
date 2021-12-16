@@ -57,10 +57,11 @@ export default function SummaryModal(props) {
         </Grid>
 
         {props.cart.map((elem, index) => {
+          console.log(elem);
           return (
             <Grid key={index} container direction="row" alignItems="center">
               <Box>
-                <CardMedia image={elem.image} className={classes.cardMedia} />
+                <CardMedia image={elem.url} className={classes.cardMedia} />
               </Box>
               <Grid>
                 <Typography variant="h6">{elem.name}</Typography>

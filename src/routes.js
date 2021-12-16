@@ -11,7 +11,7 @@ export default (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/category/:category" component={Category} />
-    <Route path="/product/:name" component={Product} />
+    <Route path="/product/:id" component={Product} />
     <Route path="/cart" component={Cart} />
     <Route path="/favorite" component={Favorite} />
     <Route path="/checkout" component={Checkout} />
