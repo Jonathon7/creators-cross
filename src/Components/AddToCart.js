@@ -38,7 +38,8 @@ export default function AddToCart(props) {
         name: cartItem.name,
         price: cartItem.price,
         url: cartItem.url,
-        category: cartItem.category,
+        category_id: cartItem.category_id,
+        product_id: cartItem.product_id,
       })
       .then((res) => {
         props.setCart(res.data.cart);

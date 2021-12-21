@@ -33,7 +33,7 @@ app.use(
     cookie: {
       secure: false, // if true only transmit cookie over https
       httpOnly: false, // if true prevent client side JS from reading the cookie
-      maxAge: 1000 * 60 * 10 * 2, // session max age in miliseconds
+      maxAge: 1000 * 60 * 60 * 2, // session max age in miliseconds
     },
     sameSite: "Strict",
   })
@@ -56,13 +56,18 @@ app.get("/api/favorites", favorite.getFavorites);
 app.post("/api/add-favorite", favorite.addFavorite);
 app.delete("/api/remove-favorite/:index", favorite.removeFavorite);
 
-app.get("/api/shipping-information", checkout.getShippingInformation);
+app.get(
+  "/api/validate-address/:address1/:address2/:city/:state/:zip",
+  checkout.validateAddress
+);
+app.get("/api/address-information", checkout.getAddressInformation);
 app.post("/create-payment-intent", checkout.createPaymentIntent);
-app.post("/api/shipping-information", checkout.saveShippingInformation);
+app.post("/api/address-information", checkout.saveAddressInformation);
+app.post("/api/order", checkout.confirmOrderPlacement);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../build/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../build/index.html"));
+// });
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

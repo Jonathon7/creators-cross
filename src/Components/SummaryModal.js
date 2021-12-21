@@ -57,7 +57,6 @@ export default function SummaryModal(props) {
         </Grid>
 
         {props.cart.map((elem, index) => {
-          console.log(elem);
           return (
             <Grid key={index} container direction="row" alignItems="center">
               <Box>

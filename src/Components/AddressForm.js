@@ -17,42 +17,98 @@ export default function AddressForm(props) {
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
   const [email, setEmail] = useState("");
+  const [sameAsBilling, setSameAsBilling] = useState(true);
+  const [billingFirstName, setBillingFirstName] = useState("");
+  const [billingLastName, setBillingLastName] = useState("");
+  const [billingAddress1, setBillingAddress1] = useState("");
+  const [billingAddress2, setBillingAddress2] = useState("");
+  const [billingCity, setBillingCity] = useState("");
+  const [billingState, setBillingState] = useState("");
+  const [billingZip, setBillingZip] = useState("");
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // if the user had shipping information saved in session, it gets populated into text fields
+    // if the user had shipping or billing address information saved in session, it gets populated into text fields
     axios
-      .get("/api/shipping-information")
+      .get("/api/address-information")
       .then((res) => {
-        setFirstName(res.data.firstName);
-        setLastName(res.data.lastName);
-        setAddress1(res.data.address1);
-        setAddress2(res.data.address2);
-        setCity(res.data.city);
-        setState(res.data.state);
-        setZip(res.data.zip);
-        setEmail(res.data.email);
+        if (!Object.keys(res.data).length) return;
+        setFirstName(res.data.shippingAddress.firstName);
+        setLastName(res.data.shippingAddress.lastName);
+        setAddress1(res.data.shippingAddress.address1);
+        setAddress2(res.data.shippingAddress.address2);
+        setCity(res.data.shippingAddress.city);
+        setState(res.data.shippingAddress.state);
+        setZip(res.data.shippingAddress.zip);
+        setEmail(res.data.shippingAddress.email);
+
+        setBillingFirstName(res.data.billingAddress.firstName);
+        setBillingLastName(res.data.billingAddress.lastName);
+        setBillingAddress1(res.data.billingAddress.address1);
+        setBillingAddress2(res.data.billingAddress.address2);
+        setBillingCity(res.data.billingAddress.city);
+        setBillingState(res.data.billingAddress.state);
+        setBillingZip(res.data.billingAddress.zip);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  const validate = () => {
+  const validate = async () => {
     if (!firstName || !lastName || !address1 || !city || !zip || !email) {
+      setError(true);
+    } else if (
+      !sameAsBilling &&
+      (!billingAddress1 ||
+        !billingAddress2 ||
+        !billingCity ||
+        !billingState ||
+        !billingZip)
+    ) {
       setError(true);
     } else {
       !error && setError(true);
+
+      const addressValidation = await axios.get(
+        `/api/validate-address/${address1}/${
+          address2 || null
+        }/${city}/${state}/${zip}`
+      );
+
+      console.log(addressValidation);
+
+      setAddress1(addressValidation.data.Address2[0]);
+      setAddress2(
+        addressValidation.data.Address1[0] === "NULL"
+          ? ""
+          : addressValidation.data.Address1[0]
+      );
+      setCity(addressValidation.data.City[0]);
+      setState(addressValidation.data.State[0]);
+      setZip(addressValidation.data.Zip5[0]);
+
       axios
-        .post("/api/shipping-information", {
-          firstName,
-          lastName,
-          address1,
-          address2,
-          city,
-          state,
-          zip,
-          email,
+        .post("/api/address-information", {
+          shippingAddress: {
+            firstName,
+            lastName,
+            address1,
+            address2,
+            city,
+            state,
+            zip,
+            email,
+          },
+          billingAddress: {
+            firstName: !sameAsBilling ? billingFirstName : firstName,
+            lastName: !sameAsBilling ? billingLastName : lastName,
+            address1: !sameAsBilling ? billingAddress1 : address1,
+            address2: !sameAsBilling ? billingAddress2 : address2,
+            city: !sameAsBilling ? billingCity : city,
+            state: !sameAsBilling ? billingState : state,
+            zip: !sameAsBilling ? billingZip : zip,
+          },
         })
         .catch((err) => console.log(err));
 
@@ -60,10 +116,14 @@ export default function AddressForm(props) {
     }
   };
 
+  const toggleSameAsBilling = () => {
+    setSameAsBilling(!sameAsBilling);
+  };
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Shipping address
+        Shipping Address
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -183,20 +243,138 @@ export default function AddressForm(props) {
             onChange={(e) => setEmail(e.target.value)}
           />
         </Grid>
-        <Grid
-          container
-          xs={12}
-          justifyContent="space-between"
-          style={{ margin: 5 }}
-        >
-          <FormControlLabel
-            control={
-              <Checkbox color="secondary" name="saveAddress" value="yes" />
-            }
-            label="Use this address for payment details"
-          />
-          <Button onClick={validate}>Next</Button>
-        </Grid>
+      </Grid>
+
+      <div style={{ marginTop: 25 }} />
+
+      {!sameAsBilling && (
+        <React.Fragment>
+          <Typography variant="h6" gutterBottom>
+            Billing Address
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required={true}
+                id="billingFirstName"
+                name="billingFirstName"
+                label="First name"
+                value={billingFirstName}
+                fullWidth
+                autoComplete="given-name"
+                error={error && !billingFirstName && true}
+                helperText={error && "Required!"}
+                onChange={(e) => setBillingFirstName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="billingLastName"
+                name="billingLastName"
+                label="Last name"
+                value={billingLastName}
+                fullWidth
+                autoComplete="family-name"
+                error={error && !billingLastName && true}
+                helperText={error && "Required!"}
+                onChange={(e) => setBillingLastName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="billingAddress1"
+                name="billingAddress1"
+                label="Address line 1"
+                value={billingAddress1}
+                fullWidth
+                autoComplete="shipping address-line1"
+                error={error && !billingAddress1 && true}
+                helperText={error && "Required!"}
+                onChange={(e) => setBillingAddress1(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="billingAddress2"
+                name="billingAddress2"
+                label="Address line 2"
+                value={billingAddress2}
+                fullWidth
+                autoComplete="shipping address-line2"
+                onChange={(e) => setBillingAddress2(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="billingCity"
+                name="billingCity"
+                label="City"
+                value={billingCity}
+                fullWidth
+                autoComplete="shipping address-level2"
+                error={error && !billingCity && true}
+                helperText={error && "Required!"}
+                onChange={(e) => setBillingCity(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                select
+                id="billingState"
+                name="billingState"
+                label="State"
+                value={billingState}
+                fullWidth
+                error={error && !billingState && true}
+                helperText={error && "Required!"}
+                onChange={(e) => setBillingState(e.target.value)}
+              >
+                {states.map((elem) => {
+                  return (
+                    <MenuItem value={elem.label} key={elem.label}>
+                      {elem.label}
+                    </MenuItem>
+                  );
+                })}
+              </TextField>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="billingZip"
+                name="billingZip"
+                label="Zip / Postal code"
+                value={billingZip}
+                fullWidth
+                autoComplete="shipping postal-code"
+                error={error && !billingZip && true}
+                helperText={error && "Required!"}
+                onChange={(e) => setBillingZip(e.target.value)}
+              />
+            </Grid>
+          </Grid>
+        </React.Fragment>
+      )}
+
+      <Grid container justifyContent="space-between" style={{ margin: 5 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              color="secondary"
+              name="saveAddress"
+              value="yes"
+              checked={sameAsBilling}
+              onClick={toggleSameAsBilling}
+            />
+          }
+          label="Same as billing address"
+        />
+
+        <Button onClick={validate}>Next</Button>
       </Grid>
     </React.Fragment>
   );

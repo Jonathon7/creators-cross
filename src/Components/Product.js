@@ -70,7 +70,6 @@ export default function Product(props) {
     axios
       .get("/api/cart")
       .then((res) => {
-        console.log(res.data);
         if (Array.isArray(res.data)) {
           setCart(res.data);
         }

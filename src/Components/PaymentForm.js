@@ -41,19 +41,21 @@ export default function PaymentForm(props) {
         if (!Array.isArray(res.data)) {
           props.history.push("/cart");
         }
+
         let total = 0;
         for (let i = 0; i < res.data.length; i++) {
           total += parseFloat(res.data[i].price);
         }
+
         setTotal(total);
         setCart(res.data);
       })
       .catch((err) => console.log(err));
 
     axios
-      .get("/api/shipping-information")
+      .get("/api/address-information")
       .then((res) => {
-        setShippingInformation(res.data);
+        setShippingInformation(res.data.shippingAddress);
       })
       .catch((err) => console.log(err));
   }, [cart.length, props.history]);
@@ -68,6 +70,19 @@ export default function PaymentForm(props) {
         const paymentResult = await stripe.confirmCardPayment(res.data, {
           payment_method: {
             card: elements.getElement(CardElement),
+            billing_details: {
+              name:
+                shippingInformation.firstName +
+                " " +
+                shippingInformation.lastName,
+              address: {
+                line1: shippingInformation.address1,
+                line2: shippingInformation.address2 || "",
+                city: shippingInformation.city,
+                state: shippingInformation.state,
+                postal_code: shippingInformation.zip,
+              },
+            },
           },
         });
 
@@ -75,12 +90,25 @@ export default function PaymentForm(props) {
           alert(paymentResult.error.message);
         } else {
           if (paymentResult.paymentIntent.status === "succeeded") {
+            console.log(paymentResult.paymentIntent);
+            const { id, amount, object, status } = paymentResult.paymentIntent;
+            await confirmOrderPlacement(id, amount, object, status);
             props.handleNext();
           }
         }
       })
       .catch((err) => console.log(err));
   };
+
+  const confirmOrderPlacement = (orderNumber, amount, type, status) =>
+    new Promise((resolve) => {
+      axios
+        .post("/api/order", { orderNumber, amount, type, status })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => console.log(err));
+    });
 
   const handleChange = (e) => {
     if (!e.complete && complete) {
@@ -117,7 +145,8 @@ export default function PaymentForm(props) {
           Order summary
         </Typography>
         <List disablePadding>
-          {Array.isArray(cart) &&
+          {cart &&
+            Array.isArray(cart) &&
             cart.map((product) => (
               <ListItem className={classes.listItem} key={product.name}>
                 <ListItemText
@@ -134,21 +163,25 @@ export default function PaymentForm(props) {
             </Typography>
           </ListItem>
         </List>
-        <Grid container spacing={2} style={{ paddingBottom: 30 }}>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="h6" gutterBottom className={classes.title}>
-              Shipping
-            </Typography>
-            <Typography gutterBottom>
-              {shippingInformation.firstName} {shippingInformation.lastName}
-            </Typography>
-            <Typography gutterBottom>{shippingInformation.address1}</Typography>
-            <Typography gutterBottom>
-              {shippingInformation.city}, {shippingInformation.state}
-              {" " + shippingInformation.zip}, {shippingInformation.country}
-            </Typography>
+        {Object.keys(shippingInformation).length && (
+          <Grid container spacing={2} style={{ paddingBottom: 30 }}>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h6" gutterBottom className={classes.title}>
+                Shipping
+              </Typography>
+              <Typography gutterBottom>
+                {shippingInformation.firstName} {shippingInformation.lastName}
+              </Typography>
+              <Typography gutterBottom>
+                {shippingInformation.address1}
+              </Typography>
+              <Typography gutterBottom>
+                {shippingInformation.city}, {shippingInformation.state}
+                {" " + shippingInformation.zip}
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Box>
       <Box>
         <Typography variant="h6" gutterBottom>

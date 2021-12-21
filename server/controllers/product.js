@@ -55,9 +55,20 @@ const addCartItem = (req, res) => {
     req.session.cart = [];
     req.session.cart.push(req.body);
     req.session.total = req.body.price;
+    req.session.cart[0].quantity = 1;
   } else {
-    req.session.cart.push(req.body);
-    req.session.total += req.body.price;
+    const idx = req.session.cart.findIndex(
+      (elem) => elem.product_id === req.body.product_id
+    );
+
+    if (idx !== -1) {
+      req.session.cart[idx].quantity += 1;
+      req.session.total += req.session.cart[idx].price;
+    } else {
+      req.session.cart.push(req.body);
+      req.session.cart[req.session.cart.length - 1].quantity = 1;
+      req.session.total += req.body.price;
+    }
   }
 
   res.status(200).json({ cart: req.session.cart, total: req.session.total });
