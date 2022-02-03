@@ -56,6 +56,11 @@ export default function Header(props) {
         >
           {title}
         </Typography>
+        {props.logout && (
+          <Button size="small" onClick={props.logout}>
+            Logout
+          </Button>
+        )}
         <Button size="small">Subscribe</Button>
         <IconButton href="/favorite">
           <FavoriteBorderIcon />

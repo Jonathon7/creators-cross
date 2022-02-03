@@ -33,6 +33,7 @@ const useStyles = makeStyles(() => ({
 
 export default function FavoritedItem(props) {
   const classes = useStyles();
+
   return (
     <Grid item xs={10} sm={4} className={classes.outerGrid}>
       <Paper className={classes.card} variant="outlined">
@@ -57,13 +58,13 @@ export default function FavoritedItem(props) {
         <Button
           variant="outlined"
           className={classes.button}
-          onClick={() => props.favoriteToCart(props.favorite, props.index)}
+          onClick={() => props.favoriteToCart(props.favorite)}
         >
           Add to Cart
         </Button>
         <Button
           className={classes.button}
-          onClick={() => props.removeFavorite(props.index)}
+          onClick={() => props.removeFavorite(props.favorite.product_id)}
         >
           Remove Favorite
         </Button>

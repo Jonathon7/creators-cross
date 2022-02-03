@@ -29,7 +29,7 @@ export default function FeaturedPost(props) {
   return (
     <Grid item xs={12} sm={6} md={4}>
       {post && (
-        <CardActionArea component="a" href={`/product/${post.product_id}`}>
+        <CardActionArea component="a" href={`/product/${post.name}`}>
           <Card className={classes.card}>
             <Box className={classes.imageBox}>
               <img src={post.url} alt={post.name} />

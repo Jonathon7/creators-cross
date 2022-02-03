@@ -64,6 +64,7 @@ export default function SummaryModal(props) {
               </Box>
               <Grid>
                 <Typography variant="h6">{elem.name}</Typography>
+                <Typography variant="subtitle1">Qty {elem.quantity}</Typography>
                 <Typography variant="subtitle1">${elem.price}</Typography>
               </Grid>
             </Grid>

@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Header from "./Header";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
-import OrderDetails from "./OrderDetails";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -47,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ["Shipping address", "Payment", "Order Details"];
+const steps = ["Address", "Payment"];
 
-function getStepContent(step, handleBack, handleNext) {
+function getStepContent(step, handleBack, handleNext, finish) {
   switch (step) {
     case 0:
       return <AddressForm handleNext={handleNext} />;
@@ -59,10 +59,9 @@ function getStepContent(step, handleBack, handleNext) {
           step={step}
           handleBack={handleBack}
           handleNext={handleNext}
+          finish={finish}
         />
       );
-    case 2:
-      return <OrderDetails />;
     default:
       throw new Error("Unknown Step");
   }
@@ -81,11 +80,12 @@ const sections = [
 export default function Checkout(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get("/api/cart").then((res) => {
-      if (!Array.isArray(res.data)) {
-        props.history.push("/cart");
+      if (!Array.isArray(res.data.cart)) {
+        navigate("/cart");
       }
     });
   });
@@ -96,6 +96,10 @@ export default function Checkout(props) {
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+  };
+
+  const finish = () => {
+    navigate("/confirmation");
   };
 
   return (
@@ -117,7 +121,7 @@ export default function Checkout(props) {
             </Stepper>
             <React.Fragment>
               <React.Fragment>
-                {getStepContent(activeStep, handleBack, handleNext)}
+                {getStepContent(activeStep, handleBack, handleNext, finish)}
               </React.Fragment>
             </React.Fragment>
           </Paper>

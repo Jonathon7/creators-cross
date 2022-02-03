@@ -5,6 +5,7 @@ import Header from "./Header";
 import ProductsGrid from "./ProductsGrid";
 import Footer from "./Footer";
 import Typography from "@material-ui/core/Typography";
+import { useParams } from "react-router-dom";
 
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
@@ -16,19 +17,20 @@ const sections = [
   { title: "Blog", url: "#" },
 ];
 
-export default function Category(props) {
+export default function Category() {
   const [products, setProducts] = useState([]);
+  const params = useParams();
 
   useEffect(() => {
     axios
-      .get(`/api/products/${props.match.params.category}`)
+      .get(`/api/products/${params.category}`)
       .then((res) => {
         setProducts(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [products.length, props.match.params.category]);
+  }, [products.length, params.category]);
 
   return (
     <React.Fragment>

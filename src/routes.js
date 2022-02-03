@@ -1,19 +1,25 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./Components/Home";
 import Category from "./Components/Category";
 import Product from "./Components/Product";
 import Cart from "./Components/Cart";
 import Favorite from "./Components/Favorite";
 import Checkout from "./Components/Checkout";
+import Confirmation from "./Components/Confirmation";
+import Dashboard from "./Components/Dashboard";
+import Login from "./Components/Login";
 
 export default (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route path="/category/:category" component={Category} />
-    <Route path="/product/:id" component={Product} />
-    <Route path="/cart" component={Cart} />
-    <Route path="/favorite" component={Favorite} />
-    <Route path="/checkout" component={Checkout} />
-  </Switch>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/category/:category" element={<Category />} />
+    <Route path="/product/:name" element={<Product />} />
+    <Route path="/cart" element={<Cart />} />
+    <Route path="/favorite" element={<Favorite />} />
+    <Route path="/checkout" element={<Checkout />} />
+    <Route path="/confirmation" element={<Confirmation />} />
+    <Route path="/dashboard" element={<Dashboard />} />
+    <Route path="/login" element={<Login />} />
+  </Routes>
 );

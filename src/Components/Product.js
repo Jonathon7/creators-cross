@@ -12,6 +12,8 @@ import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
 import AddToCart from "./AddToCart";
 import SummaryModal from "./SummaryModal";
+import RingSizeSelector from "./RingSizeSelector";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   h1: {
@@ -50,34 +52,35 @@ const sections = [
 
 let timeout = null;
 
-export default function Product(props) {
+export default function Product() {
   const [product, setProduct] = useState({});
+  const [value, setValue] = useState(null);
   const [cart, setCart] = useState([]);
   const [open, setOpen] = useState(false);
-
+  const params = useParams();
   const classes = useStyles();
 
   useEffect(() => {
     axios
-      .get(`/api/product/${props.match.params.id}`)
+      .get(`/api/product/${params.name}`)
       .then((res) => {
-        setProduct(res.data[0]);
+        setProduct(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
 
     axios
       .get("/api/cart")
       .then((res) => {
-        if (Array.isArray(res.data)) {
-          setCart(res.data);
+        if (Array.isArray(res.data.cart)) {
+          setCart(res.data.cart);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [props.match.params.id]);
+  }, [params.name]);
 
   function toggleModal() {
     clearTimeout(timeout);
@@ -100,15 +103,25 @@ export default function Product(props) {
             <Box className={classes.imageBox}>
               <img src={product.url} alt={product.name} />
             </Box>
-            <AddToCart
-              product={product}
-              setCart={setCart}
-              toggleModal={toggleModal}
-            />
+            <Grid container direction="row" justifyContent="space-between">
+              <AddToCart
+                product={product}
+                setCart={setCart}
+                toggleModal={toggleModal}
+                value={value}
+              />
+              {product.category_id === 2 && (
+                <RingSizeSelector
+                  values={product.value}
+                  setValue={setValue}
+                  value={value}
+                />
+              )}
+            </Grid>
           </Card>
           <Container className={classes.textContainer}>
             <Typography variant="h3" component="h1" className={classes.h1}>
-              Product Name
+              {product.name}
             </Typography>
             <Divider />
             <Typography

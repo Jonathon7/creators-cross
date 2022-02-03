@@ -3,21 +3,11 @@ const axios = require("axios");
 const xml2js = require("xml2js");
 const { pool } = require("../db");
 
-const calculateOrderAmount = (cart) => {
-  let amount = 0;
-
-  for (let i = 0; i < cart.length; i++) {
-    amount += parseFloat(cart[i].price);
-  }
-
-  amount *= 100; // converting dollars to cents
-
-  return amount;
-};
-
 const createPaymentIntent = async (req, res) => {
+  const shippingAmount = req.session.subtotal < 40 ? 8.99 : 0;
+
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(req.session.cart),
+    amount: (req.session.subtotal + shippingAmount) * 100,
     currency: "usd",
     receipt_email: req.session.shippingAddress.email,
   });
@@ -46,22 +36,24 @@ const createPaymentIntent = async (req, res) => {
 };
 
 const validateAddress = async (req, res) => {
-  const { address1, address2, city, state, zip } = req.params;
+  let { address1, address2, city, state, zip } = req.params;
+
+  if (!address2) address2 = "";
 
   const BASE_URL =
     "https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&XML=";
 
   const XML = `<AddressValidateRequest USERID="${process.env.USPS_ID}">
-<Revision>1</Revision>
-<Address ID="0">
-<Address1>${address2}</Address1>
-<Address2>${address1}</Address2>
-<City>${city}</City>
-<State>${state}</State>
-<Zip5>${zip}</Zip5>
-<Zip4/>
-</Address>
-</AddressValidateRequest>`;
+               <Revision>1</Revision>
+               <Address ID="0">
+               <Address1>${encodeURIComponent(address2)}</Address1>
+               <Address2>${encodeURIComponent(address1)}</Address2>
+               <City>${encodeURIComponent(city)}</City>
+               <State>${state}</State>
+               <Zip5>${zip}</Zip5>
+               <Zip4/>
+               </Address>
+               </AddressValidateRequest>`;
 
   const response = await axios.get(BASE_URL + XML, {
     headers: { "Content-Type": "text/xml" },
@@ -70,6 +62,13 @@ const validateAddress = async (req, res) => {
   xml2js.parseString(response.data, (err, result) => {
     if (err) {
       throw err;
+    }
+
+    if (result.AddressValidateResponse.Address[0].Error) {
+      return res.status(400).json({
+        message:
+          result.AddressValidateResponse.Address[0].Error[0].Description[0],
+      });
     }
 
     res.status(200).json(result.AddressValidateResponse.Address[0]);
@@ -110,8 +109,8 @@ const getExistingAddress = (shippingAddress, billingAddress) =>
 
 const getAddressInformation = (req, res) => {
   res.status(200).json({
-    shippingAddress: req.session.shippingAddress,
-    billingAddress: req.session.billingAddress,
+    shippingAddress: req.session.shippingAddress || {},
+    billingAddress: req.session.billingAddress || {},
   });
 };
 
@@ -170,6 +169,7 @@ const confirmOrderPlacement = (req, res) => {
 
     saveProductsToDb(req.session.cart, results.insertId);
     req.session.cart = [];
+    req.session.subtotal = 0;
 
     res.sendStatus(200);
   });

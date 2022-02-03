@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
+import AddressSuggestion from "./AddressSuggestion";
 
 export default function AddressForm(props) {
   const [firstName, setFirstName] = useState("");
@@ -26,6 +27,10 @@ export default function AddressForm(props) {
   const [billingState, setBillingState] = useState("");
   const [billingZip, setBillingZip] = useState("");
   const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [suggestion, setSuggestion] = useState({});
+  const [suggestionError, setSuggestionError] = useState("");
+  const [corrections, setCorrections] = useState([]);
 
   useEffect(() => {
     // if the user had shipping or billing address information saved in session, it gets populated into text fields
@@ -36,7 +41,11 @@ export default function AddressForm(props) {
         setFirstName(res.data.shippingAddress.firstName);
         setLastName(res.data.shippingAddress.lastName);
         setAddress1(res.data.shippingAddress.address1);
-        setAddress2(res.data.shippingAddress.address2);
+        setAddress2(
+          res.data.shippingAddress.address2 !== "NULL"
+            ? res.data.shippingAddress.address2
+            : ""
+        );
         setCity(res.data.shippingAddress.city);
         setState(res.data.shippingAddress.state);
         setZip(res.data.shippingAddress.zip);
@@ -45,7 +54,11 @@ export default function AddressForm(props) {
         setBillingFirstName(res.data.billingAddress.firstName);
         setBillingLastName(res.data.billingAddress.lastName);
         setBillingAddress1(res.data.billingAddress.address1);
-        setBillingAddress2(res.data.billingAddress.address2);
+        setBillingAddress2(
+          res.data.billingAddress.address2 !== "NULL"
+            ? res.data.billingAddress.address2
+            : ""
+        );
         setBillingCity(res.data.billingAddress.city);
         setBillingState(res.data.billingAddress.state);
         setBillingZip(res.data.billingAddress.zip);
@@ -60,59 +73,42 @@ export default function AddressForm(props) {
       setError(true);
     } else if (
       !sameAsBilling &&
-      (!billingAddress1 ||
-        !billingAddress2 ||
-        !billingCity ||
-        !billingState ||
-        !billingZip)
+      (!billingAddress1 || !billingCity || !billingState || !billingZip)
     ) {
       setError(true);
     } else {
-      !error && setError(true);
+      !error && setError(false);
 
-      const addressValidation = await axios.get(
-        `/api/validate-address/${address1}/${
-          address2 || null
-        }/${city}/${state}/${zip}`
-      );
+      try {
+        const URL = `/api/validate-address/${encodeURIComponent(
+          address1
+        )}/${encodeURIComponent(city)}/${state}/${zip}/${encodeURIComponent(
+          address2
+        )}`;
 
-      console.log(addressValidation);
+        const addressValidation = await axios.get(URL);
 
-      setAddress1(addressValidation.data.Address2[0]);
-      setAddress2(
-        addressValidation.data.Address1[0] === "NULL"
-          ? ""
-          : addressValidation.data.Address1[0]
-      );
-      setCity(addressValidation.data.City[0]);
-      setState(addressValidation.data.State[0]);
-      setZip(addressValidation.data.Zip5[0]);
+        if (suggestionError) {
+          setSuggestionError("");
+        }
 
-      axios
-        .post("/api/address-information", {
-          shippingAddress: {
-            firstName,
-            lastName,
-            address1,
-            address2,
-            city,
-            state,
-            zip,
-            email,
-          },
-          billingAddress: {
-            firstName: !sameAsBilling ? billingFirstName : firstName,
-            lastName: !sameAsBilling ? billingLastName : lastName,
-            address1: !sameAsBilling ? billingAddress1 : address1,
-            address2: !sameAsBilling ? billingAddress2 : address2,
-            city: !sameAsBilling ? billingCity : city,
-            state: !sameAsBilling ? billingState : state,
-            zip: !sameAsBilling ? billingZip : zip,
-          },
-        })
-        .catch((err) => console.log(err));
+        if (!addressValidation.data.hasOwnProperty("Address1")) {
+          addressValidation.data.Address1 = [""];
+        }
 
-      props.handleNext();
+        setSuggestion(addressValidation.data);
+
+        if (addressValidation.data.hasOwnProperty("Footnotes")) {
+          setCorrections(addressValidation.data.Footnotes);
+          toggleModal();
+        } else {
+          continueWithSuggestedAddress(addressValidation.data);
+        }
+      } catch (e) {
+        console.log(e);
+        setSuggestionError(e.response.data.message);
+        toggleModal();
+      }
     }
   };
 
@@ -120,8 +116,95 @@ export default function AddressForm(props) {
     setSameAsBilling(!sameAsBilling);
   };
 
+  const toggleModal = () => {
+    setOpen(!open);
+  };
+
+  const continueWithSuggestedAddress = (address) => {
+    let suggestedAddress = suggestion;
+
+    if (!Object.keys(suggestion).length) {
+      suggestedAddress = address;
+    }
+
+    if (!suggestedAddress.hasOwnProperty("Address1")) {
+      suggestedAddress.Address1 = [""];
+    }
+
+    axios
+      .post("/api/address-information", {
+        shippingAddress: {
+          firstName,
+          lastName,
+          address1: suggestedAddress.Address2[0],
+          address2: suggestedAddress.Address1[0],
+          city: suggestedAddress.City[0],
+          state: suggestedAddress.State[0],
+          zip: suggestedAddress.Zip5[0],
+          email,
+        },
+        billingAddress: {
+          firstName: !sameAsBilling ? billingFirstName : firstName,
+          lastName: !sameAsBilling ? billingLastName : lastName,
+          address1: !sameAsBilling
+            ? billingAddress1
+            : suggestedAddress.Address2[0],
+          address2: !sameAsBilling
+            ? billingAddress2
+            : suggestedAddress.Address1[0],
+          city: !sameAsBilling ? billingCity : suggestedAddress.City[0],
+          state: !sameAsBilling ? billingState : suggestedAddress.State[0],
+          zip: !sameAsBilling ? billingZip : suggestedAddress.Zip5[0],
+        },
+      })
+      .catch((err) => console.log(err));
+
+    props.handleNext();
+  };
+
+  const continueAnyway = () => {
+    axios
+      .post("/api/address-information", {
+        shippingAddress: {
+          firstName,
+          lastName,
+          address1,
+          address2,
+          city,
+          state,
+          zip,
+          email,
+        },
+        billingAddress: {
+          firstName: !sameAsBilling ? billingFirstName : firstName,
+          lastName: !sameAsBilling ? billingLastName : lastName,
+          address1: !sameAsBilling ? billingAddress1 : address1,
+          address2: !sameAsBilling ? billingAddress2 : address2,
+          city: !sameAsBilling ? billingCity : city,
+          state: !sameAsBilling ? billingState : state,
+          zip: !sameAsBilling ? billingZip : zip,
+        },
+      })
+      .then(() => props.handleNext())
+      .catch((err) => console.log(err));
+  };
+
   return (
     <React.Fragment>
+      <AddressSuggestion
+        open={open}
+        close={toggleModal}
+        address1={address1}
+        address2={address2}
+        city={city}
+        state={state}
+        zip={zip}
+        suggestion={suggestion}
+        error={suggestionError}
+        corrections={corrections}
+        continueWithSuggestedAddress={continueWithSuggestedAddress}
+        continueAnyway={continueAnyway}
+      />
       <Typography variant="h6" gutterBottom>
         Shipping Address
       </Typography>

@@ -7,6 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import CartItem from "./CartItem";
+import useSnackbar from "../hooks/useSnackbar";
+import Snackbar from "./Snackbar";
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -32,23 +34,27 @@ const sections = [
 export default function Cart() {
   const classes = useStyles();
   const [cart, setCart] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
+  const { isOpen, message, openSnackbar } = useSnackbar();
 
   useEffect(() => {
     axios
       .get("/api/cart")
       .then((res) => {
-        if (!Array.isArray(res.data)) return;
-        setCart(res.data);
+        if (!Array.isArray(res.data.cart)) return;
+        setCart(res.data.cart);
+        setSubtotal(res.data.subtotal);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [cart.length]);
 
-  function removeCartItem(index) {
+  function removeCartItem(id) {
     axios
-      .delete(`/api/remove-cart-item/${index}`)
+      .delete(`/api/remove-cart-item/${id}`)
       .then((res) => {
+        openSnackbar("Cart Item Removed.");
         setCart(res.data);
       })
       .catch((err) => {
@@ -56,10 +62,11 @@ export default function Cart() {
       });
   }
 
-  function cartToFavorites(cartItem, index) {
+  function cartToFavorites(cartItem) {
     axios
-      .post("/api/cart-to-favorites", { cartItem, index })
+      .post("/api/cart-to-favorites", { cartItem })
       .then((res) => {
+        openSnackbar("Added To Favorites.");
         setCart(res.data);
       })
       .catch((err) => {
@@ -69,31 +76,45 @@ export default function Cart() {
 
   return (
     <React.Fragment>
+      <Snackbar open={isOpen} message={message} />
       <Container>
         <Header title="Creator's Cross" sections={sections} cart={cart} />
-        <Typography variant="h5" component="h1" className={classes.title}>
-          Cart
-        </Typography>
-        {!cart.length && (
-          <Typography>There are no items in your cart.</Typography>
-        )}
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          spacing={3}
+          alignItems="center"
+        >
+          <Grid item>
+            <Typography variant="h5" component="h1" className={classes.title}>
+              Cart
+            </Typography>
+          </Grid>
+          {!cart.length && (
+            <Typography component="p" style={{ marginLeft: 30 }}>
+              There are no items in your cart.
+            </Typography>
+          )}
 
-        {cart.length ? (
-          <Button
-            variant="contained"
-            className={classes.button}
-            href="/checkout"
-          >
-            Checkout
-          </Button>
-        ) : null}
+          {cart.length ? (
+            <Grid item>
+              <Button
+                variant="outlined"
+                className={classes.button}
+                href="/checkout"
+              >
+                Checkout (${subtotal})
+              </Button>
+            </Grid>
+          ) : null}
+        </Grid>
         <Grid>
           {cart.map((elem, i) => {
             return (
               <CartItem
                 cartItem={elem}
                 key={i}
-                index={i}
                 cartToFavorites={cartToFavorites}
                 removeCartItem={removeCartItem}
               />

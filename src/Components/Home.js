@@ -21,7 +21,7 @@ const sections = [
 const mainFeaturedPost = {
   title: "Creator's Cross Jewelry",
   description:
-    "Every piece is made from vintage silver-plated or sterling silver flatware. Our selection is all hand-made unique or custom designs.",
+    "Every piece is made from vintage, silver-plated or sterling silver flatware. Our selection is all hand-made, unique, custom designs.",
   image: hero,
   imgText: "main image description",
   linkText: "Continue reading…",

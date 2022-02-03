@@ -1,5 +1,6 @@
+import React from "react";
 import "./App.css";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import routes from "./routes";
@@ -11,7 +12,7 @@ const stripePromise = loadStripe(
 function App() {
   return (
     <Elements stripe={stripePromise}>
-      <Router>{routes}</Router>
+      <BrowserRouter>{routes}</BrowserRouter>
     </Elements>
   );
 }

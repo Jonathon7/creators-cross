@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Header from "./Header";
-import FavoritedItem from "./FavoritedItem";
+import axios from "axios";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import axios from "axios";
+import useSnackbar from "../hooks/useSnackbar";
+import Header from "./Header";
+import Snackbar from "./Snackbar";
+import FavoritedItem from "./FavoritedItem";
+import AttributeSelector from "./AttributeSelector";
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -27,7 +30,10 @@ const sections = [
 export default function Favorite() {
   const classes = useStyles();
   const [favorites, setFavorites] = useState([]);
+  const [favorite, setFavorite] = useState(null);
   const [cart, setCart] = useState([]);
+  const { isOpen, message, openSnackbar } = useSnackbar();
+  const [open, setOpen] = useState(false); // for attribute selector
 
   useEffect(() => {
     axios
@@ -44,8 +50,8 @@ export default function Favorite() {
     axios
       .get("/api/cart")
       .then((res) => {
-        if (Array.isArray(res.data)) {
-          setCart(res.data);
+        if (Array.isArray(res.data.cart)) {
+          setCart(res.data.cart);
         }
       })
       .catch((err) => {
@@ -53,22 +59,30 @@ export default function Favorite() {
       });
   }, []);
 
-  function favoriteToCart(favorite, index) {
-    axios
-      .post("/api/favorites-to-cart", { favorite, index })
-      .then((res) => {
-        setFavorites(res.data.favorites);
-        setCart(res.data.cart);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  function favoriteToCart(favorite) {
+    if (favorite.value && favorite.value.length > 1) {
+      setFavorite(favorite);
+      togglAttributeSelector();
+    } else {
+      axios
+        .post("/api/favorites-to-cart", { favorite })
+        .then((res) => {
+          openSnackbar("Added To Cart.");
+          setFavorites(res.data.favorites);
+          setCart(res.data.cart);
+        })
+        .catch((err) => {
+          console.log(err.response);
+          openSnackbar(err.response.data);
+        });
+    }
   }
 
-  function removeFavorite(index) {
+  function removeFavorite(id) {
     axios
-      .delete(`/api/remove-favorite/${index}`)
+      .delete(`/api/remove-favorite/${id[0]}`)
       .then((res) => {
+        openSnackbar("Favorite Removed.");
         setFavorites(res.data);
       })
       .catch((err) => {
@@ -76,8 +90,20 @@ export default function Favorite() {
       });
   }
 
+  const togglAttributeSelector = () => {
+    setOpen(!open);
+  };
+
   return (
     <React.Fragment>
+      <AttributeSelector
+        open={open}
+        close={togglAttributeSelector}
+        favorite={favorite}
+        setFavorites={setFavorites}
+        setCart={setCart}
+      />
+      <Snackbar open={isOpen} message={message} />
       <Container>
         <Header title="Creator's Cross" sections={sections} cart={cart} />
         <Typography variant="h5" component="h1" className={classes.title}>
@@ -89,13 +115,12 @@ export default function Favorite() {
           </Typography>
         )}
 
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
+        <Grid container spacing={5} justifyContent="center" alignItems="center">
           {favorites.map((favorite, index) => {
             return (
               <FavoritedItem
                 key={index}
                 favorite={favorite}
-                index={index}
                 favoriteToCart={favoriteToCart}
                 removeFavorite={removeFavorite}
               />
