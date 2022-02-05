@@ -1,44 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
 import Header from "./Header";
 import Footer from "./Footer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import Divider from "@material-ui/core/Divider";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import Divider from "@mui/material/Divider";
 import AddToCart from "./AddToCart";
 import SummaryModal from "./SummaryModal";
 import RingSizeSelector from "./RingSizeSelector";
 import { useParams } from "react-router-dom";
-
-const useStyles = makeStyles((theme) => ({
-  h1: {
-    fontWeight: "lighter",
-  },
-  card: {
-    width: 450,
-    height: "fit-content",
-    marginTop: 30,
-    [theme.breakpoints.up("lg")]: {
-      position: "sticky",
-    },
-    top: 80,
-  },
-  textContainer: {
-    marginTop: 30,
-    width: 500,
-  },
-  imageBox: {
-    width: "100%",
-    height: 400,
-    display: "flex",
-    justifyContent: "center",
-  },
-}));
 
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
@@ -58,7 +32,6 @@ export default function Product() {
   const [cart, setCart] = useState([]);
   const [open, setOpen] = useState(false);
   const params = useParams();
-  const classes = useStyles();
 
   useEffect(() => {
     axios
@@ -99,8 +72,23 @@ export default function Product() {
       </Container>
       <Container>
         <Grid container direction="row" justifyContent="space-around">
-          <Card className={classes.card}>
-            <Box className={classes.imageBox}>
+          <Card
+            sx={{
+              width: 450,
+              height: "fit-content",
+              marginTop: 5,
+              position: { lg: "sticky", sm: "sticky", xs: "sticky" },
+              top: 80,
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                height: 400,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <img src={product.url} alt={product.name} />
             </Box>
             <Grid container direction="row" justifyContent="space-between">
@@ -119,19 +107,19 @@ export default function Product() {
               )}
             </Grid>
           </Card>
-          <Container className={classes.textContainer}>
-            <Typography variant="h3" component="h1" className={classes.h1}>
+          <Box sx={{ marginTop: 5, width: 500 }}>
+            <Typography
+              variant="h3"
+              component="h1"
+              sx={{ fontWeight: "lighter" }}
+            >
               {product.name}
             </Typography>
             <Divider />
-            <Typography
-              variant="body1"
-              display="inline"
-              className={classes.text}
-            >
+            <Typography variant="body1" display="inline">
               {product.description}
             </Typography>
-          </Container>
+          </Box>
         </Grid>
       </Container>
       <Footer title="Creator's Cross" description="" />

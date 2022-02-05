@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
 import { makeStyles } from "@mui/styles";
 
 const sizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11];
