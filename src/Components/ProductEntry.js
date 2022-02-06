@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import useCategories from "../hooks/useCategories";
 import axios from "axios";
-import Modal from "@material-ui/core/Modal";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Modal from "@mui/material/Modal";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 export default function ProductEntry(props) {
   const { categories } = useCategories();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Modal from "@material-ui/core/Modal";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import RingSizeSelector from "./RingSizeSelector";
 import Snackbar from "./Snackbar";
 import useSnackbar from "../hooks/useSnackbar";

@@ -1,8 +1,8 @@
 import React from "react";
 import FeaturedPost from "./FeaturedPost";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const uniqueProducts = (products) => {
   const result = [];
@@ -30,7 +30,9 @@ export default function ProductsGrid(props) {
   return (
     <React.Fragment>
       <Container>
-        <Typography variant="h5">{props.header}</Typography>
+        <Typography variant="h5" sx={{ mt: 3 }}>
+          {props.header}
+        </Typography>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
           {products.map((post, index) => {
             return <FeaturedPost post={post} key={index} />;

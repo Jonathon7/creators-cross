@@ -1,9 +1,9 @@
 import React from "react";
-import Modal from "@material-ui/core/Modal";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import AddressCard from "./AddressCard";
 import CorrectionsList from "./CorrectionsList";
 

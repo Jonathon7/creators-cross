@@ -1,53 +1,36 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
+import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 import CloseIcon from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
-
-const useStyles = makeStyles((theme) => ({
-  boxSummary: {
-    position: "absolute",
-    top: 0,
-    right: 10,
-    background: "#fff",
-    width: 400,
-    padding: 10,
-  },
-  cardMedia: {
-    height: 100,
-    width: 100,
-  },
-  checkoutButton: {
-    marginLeft: 10,
-  },
-}));
+import IconButton from "@mui/material/IconButton";
 
 export default function SummaryModal(props) {
-  const classes = useStyles();
-
   return (
     <Modal
       open={props.open}
       style={{ overflowY: "scroll" }}
       onClose={props.toggleModal}
     >
-      <Box className={classes.boxSummary}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          right: 10,
+          background: "#fff",
+          width: 400,
+          p: 2,
+        }}
+      >
         <Grid container justifyContent="space-between" alignItems="center">
           <Box>
             <Typography variant="subtitle1" display="inline">
               Item added to cart
             </Typography>
-            <Button
-              href="/cart"
-              variant="outlined"
-              size="small"
-              className={classes.checkoutButton}
-            >
+            <Button href="/cart" variant="outlined" size="small" sx={{ ml: 1 }}>
               checkout
             </Button>
           </Box>
@@ -60,7 +43,7 @@ export default function SummaryModal(props) {
           return (
             <Grid key={index} container direction="row" alignItems="center">
               <Box>
-                <CardMedia image={elem.url} className={classes.cardMedia} />
+                <CardMedia image={elem.url} sx={{ height: 100, width: 100 }} />
               </Box>
               <Grid>
                 <Typography variant="h6">{elem.name}</Typography>

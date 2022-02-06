@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import Header from "./Header";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
 import CartItem from "./CartItem";
 import useSnackbar from "../hooks/useSnackbar";
 import Snackbar from "./Snackbar";
-
-const useStyles = makeStyles(() => ({
-  title: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  button: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
-}));
 
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
@@ -32,7 +20,6 @@ const sections = [
 ];
 
 export default function Cart() {
-  const classes = useStyles();
   const [cart, setCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const { isOpen, message, openSnackbar } = useSnackbar();
@@ -87,23 +74,19 @@ export default function Cart() {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h5" component="h1" className={classes.title}>
+            <Typography variant="h5" component="h1" sx={{ mt: 2, mb: 2 }}>
               Cart
             </Typography>
           </Grid>
           {!cart.length && (
-            <Typography component="p" style={{ marginLeft: 30 }}>
+            <Typography component="p" sx={{ ml: 4, mt: 3 }}>
               There are no items in your cart.
             </Typography>
           )}
 
           {cart.length ? (
             <Grid item>
-              <Button
-                variant="outlined"
-                className={classes.button}
-                href="/checkout"
-              >
+              <Button variant="outlined" sx={{ mt: 3, mb: 3 }} href="/checkout">
                 Checkout (${subtotal})
               </Button>
             </Grid>

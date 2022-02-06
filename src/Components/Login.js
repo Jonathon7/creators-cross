@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Header from "./Header";
@@ -27,34 +26,6 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(3),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    width: "80%",
-    margin: "auto",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: "#2196f3",
-  },
-  form: {
-    width: "90%",
-    marginTop: theme.spacing(3),
-  },
-  button: {
-    background: "#2196f3",
-    color: "#fff",
-    margin: theme.spacing(3, 0, 2),
-    "&:hover": {
-      backgroundColor: "#4dabf5",
-      color: "#fff",
-    },
-  },
-}));
-
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
   { title: "Rings", url: "/category/rings" },
@@ -71,7 +42,6 @@ export default function Login(props) {
   const [formError, setFormError] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
-  const classes = useStyles();
 
   const validate = () => {
     if (!emailAddress || !password) {
@@ -108,14 +78,23 @@ export default function Login(props) {
         }}
       >
         <CardContent>
-          <Box className={classes.paper}>
-            <Avatar className={classes.avatar}>
+          <Box
+            sx={{
+              mt: 3,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "80%",
+              margin: "auto",
+            }}
+          >
+            <Avatar sx={{ m: 1, backgroundColor: "#2196f3" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Login
             </Typography>
-            <form className={classes.form} noValidate>
+            <form noValidate style={{ width: "90%", marginTop: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -151,7 +130,15 @@ export default function Login(props) {
               </Grid>
               <Button
                 fullWidth
-                className={classes.button}
+                sx={{
+                  background: "#2196f3",
+                  color: "#fff",
+                  mt: 2,
+                  "&:hover": {
+                    backgroundColor: "#4dabf5",
+                    color: "#fff",
+                  },
+                }}
                 variant="contained"
                 onClick={authenticate}
               >

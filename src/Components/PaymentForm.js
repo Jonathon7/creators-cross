@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -17,18 +16,6 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
-
-const useStyles = makeStyles((theme) => ({
-  listItem: {
-    padding: theme.spacing(1, 0),
-  },
-  subtotal: {
-    fontWeight: 700,
-  },
-  title: {
-    marginTop: theme.spacing(2),
-  },
-}));
 
 export default function PaymentForm(props) {
   const [cart, setCart] = useState([]);
@@ -40,7 +27,6 @@ export default function PaymentForm(props) {
   const [shippingPrice] = useState(8.99);
   const [tax] = useState(0.0);
 
-  const classes = useStyles();
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
@@ -171,7 +157,7 @@ export default function PaymentForm(props) {
             categories.length &&
             cart.map((product) => {
               return (
-                <ListItem className={classes.listItem} key={product.name}>
+                <ListItem sx={{ padding: 1 }} key={product.name}>
                   <img
                     src={product.url}
                     alt={product.name}
@@ -199,15 +185,15 @@ export default function PaymentForm(props) {
 
           <Divider style={{ marginTop: 20, marginBottom: 20 }} />
 
-          <ListItem className={classes.listItem}>
+          <ListItem sx={{ mt: 1 }}>
             <ListItemText secondary="Subtotal" variant="subtitle2" />
             <Typography variant="subtitle2">${subtotal}</Typography>
           </ListItem>
-          <ListItem className={classes.listItem}>
+          <ListItem sx={{ mt: 1 }}>
             <ListItemText secondary="Shipping" />
             <Typography variant="subtitle2">${shippingPrice}</Typography>
           </ListItem>
-          <ListItem className={classes.listItem}>
+          <ListItem sx={{ mt: 1 }}>
             <ListItemText secondary="Taxes" />
             <Typography variant="subtitle2">${tax}</Typography>
           </ListItem>
@@ -215,7 +201,7 @@ export default function PaymentForm(props) {
 
         <Divider style={{ marginTop: 20, marginBottom: 20 }} />
 
-        <ListItem className={classes.listItem}>
+        <ListItem sx={{ mt: 1 }}>
           <ListItemText secondary="Total" />
           <Typography variant="subtitle2">
             ${(subtotal + shippingPrice + tax).toFixed(2)}

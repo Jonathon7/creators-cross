@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import useSnackbar from "../hooks/useSnackbar";
 import Header from "./Header";
 import Snackbar from "./Snackbar";
 import FavoritedItem from "./FavoritedItem";
 import AttributeSelector from "./AttributeSelector";
-
-const useStyles = makeStyles(() => ({
-  title: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
-}));
 
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
@@ -28,7 +20,6 @@ const sections = [
 ];
 
 export default function Favorite() {
-  const classes = useStyles();
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState(null);
   const [cart, setCart] = useState([]);
@@ -106,7 +97,7 @@ export default function Favorite() {
       <Snackbar open={isOpen} message={message} />
       <Container>
         <Header title="Creator's Cross" sections={sections} cart={cart} />
-        <Typography variant="h5" component="h1" className={classes.title}>
+        <Typography variant="h5" component="h1" sx={{ mt: 2, mb: 2 }}>
           Favorites
         </Typography>
         {!favorites.length && (

@@ -1,28 +1,18 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import Link from "@material-ui/core/Link";
-
-const useStyles = makeStyles({
-  card: {
-    marginBottom: 5,
-    padding: 5,
-    background: "#F7F7F7",
-  },
-  link: {
-    opacity: 0.8,
-  },
-  grid: {},
-});
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import Link from "@mui/material/Link";
 
 const subcategories = ["type1", "type2", "type3", "type4"];
 
 export default function SubcategoryBanner() {
-  const classes = useStyles();
   return (
     <React.Fragment>
-      <Card className={classes.card} variant="outlined">
+      <Card
+        className={classes.card}
+        variant="outlined"
+        sx={{ marginBottom: 5, padding: 5, background: "#F7F7F7" }}
+      >
         <Grid
           container
           direction="row"
@@ -38,7 +28,7 @@ export default function SubcategoryBanner() {
                 key={i}
                 variant="body2"
                 href="#"
-                className={classes.link}
+                sx={{ opacity: 0.8 }}
               >
                 {elem}
               </Link>

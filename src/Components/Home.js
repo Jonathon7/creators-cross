@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Container from "@material-ui/core/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
 import Header from "./Header";
 import MainFeaturedPost from "./MainFeaturedPost";
 import ProductsGrid from "./ProductsGrid";

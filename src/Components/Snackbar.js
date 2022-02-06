@@ -1,5 +1,5 @@
 import React from "react";
-import MUISnackbar from "@material-ui/core/Snackbar";
+import MUISnackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
 export default function Snackbar(props) {

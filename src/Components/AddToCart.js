@@ -1,38 +1,21 @@
 import React, { useEffect, useState } from "react";
 import useFavorites from "../hooks/useFavorites";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import useSnackbar from "../hooks/useSnackbar";
 import Snackbar from "./Snackbar";
-
-const useStyles = makeStyles({
-  box: {
-    maxWidth: 150,
-    marginLeft: 20,
-    marginBottom: 20,
-  },
-  grid: {},
-  favorite: {},
-  addToCart: {
-    width: "100%",
-    background: "",
-    color: "",
-  },
-});
 
 export default function AddToCart(props) {
   const [newFavorites, setNewFavorites] = useState([]);
   const favorites = useFavorites(newFavorites);
   const [isFavorited, setIsFavorited] = useState(false);
   const { isOpen, message, severity, openSnackbar } = useSnackbar();
-  const classes = useStyles();
 
   useEffect(() => {
     if (
@@ -103,19 +86,17 @@ export default function AddToCart(props) {
   return (
     <React.Fragment>
       <Snackbar open={isOpen} message={message} severity={severity} />
-      <Box className={classes.box}>
+      <Box sx={{ maxWidth: 150, marginLeft: 3, marginBottom: 2 }}>
         <Grid
           container
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          className={classes.grid}
         >
           <Typography variant="h4" component="p" display="inline">
             ${props.product.price}
           </Typography>
           <IconButton
-            className={classes.favorite}
             onClick={() => (isFavorited ? removeFavorite() : addToFavorites())}
           >
             {isFavorited ? (
@@ -128,7 +109,7 @@ export default function AddToCart(props) {
         <Button
           variant="outlined"
           onClick={() => addCartItem(props.product)}
-          className={classes.addToCart}
+          sx={{ width: "100%" }}
         >
           Add To Cart
         </Button>

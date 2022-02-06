@@ -1,36 +1,12 @@
 import React from "react";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
-import { makeStyles } from "@mui/styles";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
 
 const sizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11];
 
-const useStyles = makeStyles({
-  card: {
-    width: 40,
-    textAlign: "center",
-    border: "solid 1px #0000001A",
-    cursor: "pointer",
-  },
-  selectable: {
-    "&:hover": {
-      border: "solid 1px black",
-    },
-  },
-  active: {
-    border: "solid 1px black",
-  },
-  disabled: {
-    opacity: 0.4,
-    cursor: "auto",
-  },
-});
-
 export default function RingSizeSelector(props) {
-  const classes = useStyles();
-
   return (
     <Box style={{ width: 200, marginRight: 20, marginBottom: 20 }}>
       <Typography variant="body1" style={{ paddingBottom: 10 }}>
@@ -41,13 +17,20 @@ export default function RingSizeSelector(props) {
           return (
             <Grid item key={elem}>
               <Card
-                className={`${classes.card} ${
-                  props.value === elem && classes.active
-                } ${
-                  props.values &&
-                  props.values.includes(elem.toString()) &&
-                  classes.selectable
-                }`}
+                sx={{
+                  width: 40,
+                  textAlign: "center",
+                  border: "solid 1px #0000001A",
+                  cursor: "pointer",
+                  ...(props.value === elem && {
+                    border: "solid 1px black",
+                  }),
+                  ...(props.values.includes(elem.toString()) && {
+                    "&:hover": {
+                      border: "solid 1px black",
+                    },
+                  }),
+                }}
                 onClick={
                   props.values && props.values.includes(elem.toString())
                     ? () => props.setValue(elem)
@@ -56,11 +39,13 @@ export default function RingSizeSelector(props) {
               >
                 <Typography
                   variant="body1"
-                  className={
-                    props.values && !props.values.includes(elem.toString())
-                      ? classes.disabled
-                      : null
-                  }
+                  sx={{
+                    ...(props.values &&
+                      !props.values.includes(elem.toString()) && {
+                        opacity: 0.4,
+                        cursor: "auto",
+                      }),
+                  }}
                 >
                   {elem}
                 </Typography>

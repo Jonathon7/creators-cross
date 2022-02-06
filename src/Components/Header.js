@@ -1,36 +1,16 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 import axios from "axios";
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbarTitle: {
-    flex: 1,
-    textDecoration: "none",
-  },
-  toolbarSecondary: {
-    justifyContent: "space-between",
-    overflowX: "auto",
-  },
-  toolbarLink: {
-    padding: theme.spacing(1),
-    flexShrink: 0,
-  },
-}));
-
 export default function Header(props) {
-  const classes = useStyles();
   const { sections, title } = props;
 
   const [cartLength, setCartLength] = useState(null);
@@ -45,14 +25,14 @@ export default function Header(props) {
 
   return (
     <React.Fragment>
-      <Toolbar className={classes.toolbar}>
+      <Toolbar sx={{ borderBottom: `1px solid #0000004D` }}>
         <Typography
           component="a"
           href="/"
           variant="h5"
           color="inherit"
           noWrap
-          className={classes.toolbarTitle}
+          sx={{ flex: 1, textDecoration: "none" }}
         >
           {title}
         </Typography>
@@ -79,7 +59,7 @@ export default function Header(props) {
       <Toolbar
         component="nav"
         variant="dense"
-        className={classes.toolbarSecondary}
+        sx={{ justifyContent: "space-between", overflowX: "auto" }}
       >
         {sections.map((section) => (
           <Link
@@ -88,7 +68,7 @@ export default function Header(props) {
             key={section.title}
             variant="body2"
             href={section.url}
-            className={classes.toolbarLink}
+            sx={{ padding: "1px", flexShrink: 0, textDecoration: "none" }}
           >
             {section.title}
           </Link>

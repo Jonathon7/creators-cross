@@ -1,34 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
-
-const useStyles = makeStyles((theme) => ({
-  sidebarAboutBox: {
-    padding: theme.spacing(2),
-    backgroundColor: theme.palette.grey[200],
-  },
-  sidebarSection: {
-    marginTop: theme.spacing(3),
-  },
-}));
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
 export default function Sidebar(props) {
-  const classes = useStyles();
   const { archives, description, social, title } = props;
 
   return (
     <Grid item xs={12} md={4}>
-      <Paper elevation={0} className={classes.sidebarAboutBox}>
+      <Paper elevation={0} sx={{ p: 2, backgroundColor: "gray" }}>
         <Typography variant="h6" gutterBottom>
           {title}
         </Typography>
         <Typography>{description}</Typography>
       </Paper>
-      <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
+      <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
         Archives
       </Typography>
       {archives.map((archive) => (
@@ -41,7 +29,7 @@ export default function Sidebar(props) {
           {archive.title}
         </Link>
       ))}
-      <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
+      <Typography variant="h6" gutterBottom>
         Social
       </Typography>
       {social.map((network) => (

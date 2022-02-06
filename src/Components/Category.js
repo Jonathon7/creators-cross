@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Container from "@material-ui/core/Container";
+import Container from "@mui/material/Container";
 import Header from "./Header";
 import ProductsGrid from "./ProductsGrid";
 import Footer from "./Footer";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import { useParams } from "react-router-dom";
 
 const sections = [
