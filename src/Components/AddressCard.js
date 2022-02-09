@@ -6,11 +6,13 @@ import Typography from "@mui/material/Typography";
 
 export default function AddressCard(props) {
   return (
-    <Card style={{ margin: 20 }}>
+    <Card sx={{ mb: 3, mr: 3, width: ["100%", "auto", "auto"] }}>
       <CardHeader title={props.title}></CardHeader>
       <CardContent>
         <Typography variant="body1" component="div">
-          {props.address1} {props.address2 !== "NULL" && props.address2}
+          {props.address1}{" "}
+          {props.address2 !== "NULL" ||
+            (props.address2 !== "UNDEFINED" && props.address2)}
         </Typography>
         <Typography variant="body1" component="div">
           {props.city}, {props.state} {props.zip}

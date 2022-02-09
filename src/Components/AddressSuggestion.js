@@ -12,12 +12,15 @@ export default function AddressSuggestion(props) {
     <Modal open={props.open} onClose={props.close}>
       <Box
         sx={{
-          maxWidth: 800,
-          maxHeight: 800,
+          maxWidth: ["90%", "90%", 800],
+          maxHeight: [800],
           bgcolor: "#fff",
           m: "auto",
           mt: 5,
+          pr: [2, 0, 0],
           pb: 3,
+          pl: 2,
+          pt: 1,
         }}
       >
         {props.error !== "" ? (
@@ -49,7 +52,7 @@ export default function AddressSuggestion(props) {
             <Typography
               variant="body1"
               component="div"
-              style={{ marginLeft: 20, marginBottom: 20 }}
+              sx={{ ml: [0, 2, 2], mb: 2, mr: 2 }}
             >
               Using the suggested address helps ensure that your order is
               deliverable.
@@ -57,9 +60,10 @@ export default function AddressSuggestion(props) {
 
             <Grid
               container
-              justifyContent="flex-end"
-              spacing={1}
-              style={{ paddingRight: 20 }}
+              justifyContent={["flex-start", "flex-end", "flex-end"]}
+              spacing={[0, 1, 1]}
+              rowSpacing={[1, 0, 0]}
+              sx={{ pr: 2, pt: [2, 0, 0] }}
             >
               <Grid item>
                 <Button variant="outlined" onClick={props.continueAnyway}>

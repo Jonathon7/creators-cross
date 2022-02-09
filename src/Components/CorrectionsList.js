@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 export default function CorrectionsList(props) {
   return (
     <React.Fragment>
-      <Box sx={{ ml: 3, mb: 3 }}>
+      <Box sx={{ ml: [0, 2, 2], mb: 3 }}>
         <Typography>Changes</Typography>
         {props.corrections.map((elem) => {
           const value = getAddressChangeDefinition(elem);
