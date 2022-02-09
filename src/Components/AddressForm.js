@@ -447,7 +447,7 @@ export default function AddressForm(props) {
         <FormControlLabel
           control={
             <Checkbox
-              color="secondary"
+              color="info"
               name="saveAddress"
               value="yes"
               checked={sameAsBilling}

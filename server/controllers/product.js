@@ -140,7 +140,9 @@ const removeCartItem = (req, res) => {
     (elem) => elem.product_id[0] === parseInt(req.params.id, 10)
   );
 
-  req.session.subtotal -= parseFloat(req.session.cart[idx].price);
+  req.session.subtotal -= parseFloat(
+    req.session.cart[idx].price * req.session.cart[idx].quantity
+  );
   req.session.cart.splice(idx, 1);
   res.status(200).json(req.session.cart);
 };

@@ -23,7 +23,7 @@ export default function Favorite() {
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState(null);
   const [cart, setCart] = useState([]);
-  const { isOpen, message, openSnackbar } = useSnackbar();
+  const { isOpen, message, severity, openSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false); // for attribute selector
 
   useEffect(() => {
@@ -63,8 +63,7 @@ export default function Favorite() {
           setCart(res.data.cart);
         })
         .catch((err) => {
-          console.log(err.response);
-          openSnackbar(err.response.data);
+          openSnackbar(err.response.data, "error");
         });
     }
   }
@@ -94,7 +93,7 @@ export default function Favorite() {
         setFavorites={setFavorites}
         setCart={setCart}
       />
-      <Snackbar open={isOpen} message={message} />
+      <Snackbar open={isOpen} message={message} severity={severity} />
       <Container>
         <Header title="Creator's Cross" sections={sections} cart={cart} />
         <Typography variant="h5" component="h1" sx={{ mt: 2, mb: 2 }}>
