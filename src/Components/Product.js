@@ -77,7 +77,7 @@ export default function Product() {
               width: 450,
               height: "fit-content",
               marginTop: 5,
-              position: { lg: "sticky", sm: "sticky", xs: "sticky" },
+              position: ["static", "static", "sticky"],
               top: 80,
             }}
           >

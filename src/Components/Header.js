@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import axios from "axios";
@@ -50,7 +51,7 @@ export default function Header(props) {
             badgeContent={
               cartLength ? cartLength : props.cart ? props.cart.length : null
             }
-            color="secondary"
+            color="info"
           >
             <ShoppingCartOutlinedIcon />
           </Badge>
@@ -59,20 +60,33 @@ export default function Header(props) {
       <Toolbar
         component="nav"
         variant="dense"
-        sx={{ justifyContent: "space-between", overflowX: "auto" }}
+        sx={{
+          justifyContent: "space-between",
+          overflowX: "auto",
+          mt: [2, 0, 0],
+          mb: [2, 0, 0],
+        }}
       >
-        {sections.map((section) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            sx={{ padding: "1px", flexShrink: 0, textDecoration: "none" }}
-          >
-            {section.title}
-          </Link>
-        ))}
+        <Grid
+          container
+          direction="row"
+          justifyContent={["space-evenly", "space-between", "space-between"]}
+          spacing={3}
+          rowSpacing={1}
+        >
+          {sections.map((section) => (
+            <Grid item key={section.title}>
+              <Link
+                color="inherit"
+                variant="body2"
+                href={section.url}
+                sx={{ textDecoration: "none" }}
+              >
+                {section.title}
+              </Link>
+            </Grid>
+          ))}
+        </Grid>
       </Toolbar>
     </React.Fragment>
   );

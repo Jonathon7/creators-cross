@@ -8,11 +8,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Creator's Cross
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
+      Creator's Cross {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -22,7 +18,7 @@ export default function Footer(props) {
 
   return (
     <footer>
-      <Container maxWidth="lg" sx={{ marginTop: 6, padding: 3 }}>
+      <Container maxWidth="lg" sx={{ mt: 6, p: 3 }}>
         <Typography variant="h6" align="center" gutterBottom>
           {title}
         </Typography>

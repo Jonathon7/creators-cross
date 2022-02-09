@@ -28,7 +28,7 @@ export default function MainFeaturedPost(props) {
           right: 0,
           left: 0,
           color: "#fff",
-          backgroundColor: "rgba(0,0,0,.4)",
+          backgroundColor: "rgba(0,0,0,.6)",
         }}
       />
       <Grid container>
@@ -44,10 +44,16 @@ export default function MainFeaturedPost(props) {
               variant="h3"
               color="inherit"
               gutterBottom
+              sx={{ fontSize: ["30px", "30px", "40px"] }}
             >
               {post.title}
             </Typography>
-            <Typography variant="h5" color="inherit" paragraph>
+            <Typography
+              variant="h5"
+              color="inherit"
+              paragraph
+              sx={{ fontSize: ["22px", "25px", "25px"] }}
+            >
               {post.description}
             </Typography>
           </div>
