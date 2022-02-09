@@ -8,7 +8,10 @@ export default function Snackbar(props) {
       open={props.open}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
-      <Alert severity={props.severity || "success"} sx={{ width: "100%" }}>
+      <Alert
+        severity={props.severity || "success"}
+        sx={{ width: ["50%", "100%", "100%"] }}
+      >
         {props.message}
       </Alert>
     </MUISnackbar>
