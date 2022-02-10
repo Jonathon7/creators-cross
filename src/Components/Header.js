@@ -9,7 +9,6 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import Divider from "@mui/material/Divider";
 import axios from "axios";
 
 export default function Header(props) {
@@ -86,11 +85,6 @@ export default function Header(props) {
               </Link>
             </Grid>
           ))}
-          <Divider
-            variant="middle"
-            orientation="horizontal"
-            sx={{ display: ["block", "none", "none"], width: "100%", pt: 1 }}
-          />
         </Grid>
       </Toolbar>
     </React.Fragment>
