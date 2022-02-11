@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import axios from "axios";
+import MobileHeaderLinks from "./MobileHeaderLinks";
 
 export default function Header(props) {
   const { sections, title } = props;
@@ -25,7 +26,7 @@ export default function Header(props) {
 
   return (
     <React.Fragment>
-      <Toolbar sx={{ borderBottom: `1px solid #0000004D` }}>
+      <Toolbar sx={{ borderBottom: `1px solid #0000004D`, overflow: "hidden" }}>
         <Typography
           component="a"
           href="/"
@@ -61,9 +62,6 @@ export default function Header(props) {
         variant="dense"
         sx={{
           justifyContent: "space-between",
-          overflowX: "auto",
-          mt: [2, 0, 0],
-          mb: [2, 0, 0],
         }}
       >
         <Grid
@@ -72,6 +70,7 @@ export default function Header(props) {
           justifyContent={["space-evenly", "space-between", "space-between"]}
           spacing={3}
           rowSpacing={1}
+          sx={{ display: ["none", "flex", "flex"] }}
         >
           {sections.map((section) => (
             <Grid item key={section.title}>
@@ -86,6 +85,7 @@ export default function Header(props) {
             </Grid>
           ))}
         </Grid>
+        <MobileHeaderLinks />
       </Toolbar>
     </React.Fragment>
   );

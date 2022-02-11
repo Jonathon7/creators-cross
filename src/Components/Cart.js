@@ -79,11 +79,10 @@ export default function Cart() {
             </Typography>
           </Grid>
           {!cart.length && (
-            <Typography component="p" sx={{ ml: 4, mt: 3 }}>
+            <Typography component="p" sx={{ ml: 3, width: "100%" }}>
               There are no items in your cart.
             </Typography>
           )}
-
           {cart.length ? (
             <Grid item>
               <Button variant="outlined" sx={{ mt: 3, mb: 3 }} href="/checkout">

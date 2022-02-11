@@ -107,11 +107,14 @@ export default function Product() {
               )}
             </Grid>
           </Card>
-          <Box sx={{ marginTop: 5, width: 500 }}>
+          <Box sx={{ mt: [10, 5, 5], width: 500 }}>
             <Typography
               variant="h3"
               component="h1"
-              sx={{ fontWeight: "lighter" }}
+              sx={{
+                fontWeight: "lighter",
+                fontSize: ["40px", "auto", "auto"],
+              }}
             >
               {product.name}
             </Typography>
