@@ -173,7 +173,10 @@ export default function PaymentForm(props) {
                     primary={product.name}
                     secondary={getCategory(product.category_id)}
                   />
-                  <Typography variant="subtitle2" style={{ width: "65%" }}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ width: ["45%", "65%", "65%s"] }}
+                  >
                     Qty {product.quantity}
                   </Typography>
                   <Typography variant="subtitle2">
