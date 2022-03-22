@@ -89,7 +89,11 @@ export default function Product() {
                 justifyContent: "center",
               }}
             >
-              <img src={product.url} alt={product.name} />
+              <img
+                src={product.url}
+                alt={product.name}
+                style={{ width: "100%", height: "100%" }}
+              />
             </Box>
             <Grid container direction="row" justifyContent="space-between">
               <AddToCart
