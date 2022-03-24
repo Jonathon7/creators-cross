@@ -14,11 +14,17 @@ export default function FeaturedPost(props) {
     <Grid item xs={12} sm={6} md={4}>
       {post && (
         <CardActionArea component="a" href={`/product/${post.name}`}>
-          <Card sx={{ display: "flex", flexDirection: "column", mb: 2 }}>
+          <Card
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              mb: 2,
+            }}
+          >
             <Box
               sx={{
                 width: "100%",
-                height: 400,
+                height: 350,
                 display: "flex",
                 justifyContent: "center",
               }}
