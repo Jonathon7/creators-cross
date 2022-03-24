@@ -30,9 +30,13 @@ export default function MobileHeaderLinks() {
           display: ["flex", "none", "none"],
           position: "relative",
           overflow: "hidden",
+          mt: 2,
+          mb: 2,
         }}
       >
-        <Button onClick={handleClick}>Browse Products</Button>
+        <Button onClick={handleClick} variant="outlined" sx={{ mr: 8 }}>
+          Browse Products
+        </Button>
         <Link
           color="inherit"
           variant="body2"

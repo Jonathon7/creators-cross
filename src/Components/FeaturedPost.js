@@ -29,7 +29,11 @@ export default function FeaturedPost(props) {
                 justifyContent: "center",
               }}
             >
-              <img src={post.url} alt={post.name} />
+              <img
+                src={post.url}
+                alt={post.name}
+                style={{ width: "100%", height: "100%" }}
+              />
             </Box>
             <div>
               <CardContent>

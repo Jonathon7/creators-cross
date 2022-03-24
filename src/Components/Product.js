@@ -122,7 +122,7 @@ export default function Product() {
             >
               {product.name}
             </Typography>
-            <Divider />
+            <Divider sx={{ mt: 1, mb: 1 }} />
             <Typography variant="body1" display="inline">
               {product.description}
             </Typography>

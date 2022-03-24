@@ -122,7 +122,7 @@ export default function Dashboard() {
       />
       <Container>
         <Header sections={sections} title="Creator's Cross" logout={logout} />
-        <Box sx={{ width: "80%", m: "auto", pt: 5 }}>
+        <Box sx={{ width: "80%", m: "auto", pt: 5, pb: 15 }}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Typography variant="h4" gutterBottom>
               Products
