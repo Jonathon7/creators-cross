@@ -25,7 +25,12 @@ export default function SummaryModal(props) {
           p: 2,
         }}
       >
-        <Grid container justifyContent="space-between" alignItems="center">
+        <Grid
+          container
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ mb: 1 }}
+        >
           <Box>
             <Typography variant="subtitle1" display="inline">
               Item added to cart
@@ -43,7 +48,10 @@ export default function SummaryModal(props) {
           return (
             <Grid key={index} container direction="row" alignItems="center">
               <Box>
-                <CardMedia image={elem.url} sx={{ height: 100, width: 100 }} />
+                <CardMedia
+                  image={elem.url}
+                  sx={{ height: 100, width: 100, mr: 3 }}
+                />
               </Box>
               <Grid>
                 <Typography variant="h6">{elem.name}</Typography>

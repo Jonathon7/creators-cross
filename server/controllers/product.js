@@ -213,6 +213,7 @@ const addProduct = async (req, res) => {
       `INSERT INTO inventory(quantity, created_at, modified_at) VALUES(${quantity}, UTC_TIMESTAMP(), UTC_TIMESTAMP())`
     )
     .catch((err) => {
+      console.log(err);
       return res.status(400).json(err);
     });
 
