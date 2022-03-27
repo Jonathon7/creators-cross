@@ -75,7 +75,6 @@ export default function Product() {
           <Card
             sx={{
               width: 450,
-              height: "fit-content",
               marginTop: 5,
               position: ["static", "static", "sticky"],
               top: 80,
@@ -92,7 +91,7 @@ export default function Product() {
               <img
                 src={product.url}
                 alt={product.name}
-                style={{ width: "100%", height: "100%" }}
+                // style={{ width: "100%", height: "100%" }}
               />
             </Box>
             <Grid container direction="row" justifyContent="space-between">
