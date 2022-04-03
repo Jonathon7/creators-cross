@@ -91,7 +91,7 @@ export default function Product() {
               <img
                 src={product.url}
                 alt={product.name}
-                // style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "auto" }}
               />
             </Box>
             <Grid container direction="row" justifyContent="space-between">

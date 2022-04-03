@@ -24,16 +24,16 @@ export default function FeaturedPost(props) {
           >
             <Box
               sx={{
-                width: "100%",
-                height: 350,
                 display: "flex",
                 justifyContent: "center",
+                alignItems: "center",
+                height: 350,
               }}
             >
               <img
                 src={post.url}
                 alt={post.name}
-                // style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "auto" }}
               />
             </Box>
             <div>
