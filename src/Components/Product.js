@@ -74,7 +74,7 @@ export default function Product() {
         <Grid container direction="row" justifyContent="space-around">
           <Card
             sx={{
-              width: 450,
+              width: 500,
               marginTop: 5,
               position: ["static", "static", "sticky"],
               top: 80,
@@ -83,7 +83,7 @@ export default function Product() {
             <Box
               sx={{
                 width: "100%",
-                height: 400,
+                minHeight: 350,
                 display: "flex",
                 justifyContent: "center",
               }}
