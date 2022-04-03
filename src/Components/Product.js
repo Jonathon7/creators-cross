@@ -83,7 +83,6 @@ export default function Product() {
             <Box
               sx={{
                 width: "100%",
-                minHeight: 350,
                 display: "flex",
                 justifyContent: "center",
               }}
