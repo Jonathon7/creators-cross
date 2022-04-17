@@ -20,6 +20,7 @@ export default function FeaturedPost(props) {
               flexDirection: "column",
               mb: 2,
               height: 500,
+              textAlign: "center",
             }}
           >
             <Box

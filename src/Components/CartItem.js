@@ -21,7 +21,7 @@ export default function CartItem(props) {
         <Grid container direction="row" alignItems="center">
           <CardMedia
             image={props.cartItem.url}
-            sx={{ height: 100, width: 100, m: [2, 0, 0] }}
+            sx={{ height: 100, width: 160, m: [2, 0, 0] }}
           />
           <Box>
             <Typography variant="subtitle1">{props.cartItem.name}</Typography>

@@ -162,7 +162,7 @@ export default function PaymentForm(props) {
                     src={product.url}
                     alt={product.name}
                     height="60"
-                    width="50"
+                    width="auto"
                     style={{
                       border: "solid 1px #00000033",
                       borderRadius: 5,
@@ -175,7 +175,7 @@ export default function PaymentForm(props) {
                   />
                   <Typography
                     variant="subtitle2"
-                    sx={{ width: ["45%", "65%", "65%s"] }}
+                    sx={{ width: ["45%", "65%", "65%s"], ml: 2 }}
                   >
                     Qty {product.quantity}
                   </Typography>

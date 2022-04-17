@@ -21,7 +21,7 @@ export default function SummaryModal(props) {
           top: 0,
           right: 10,
           background: "#fff",
-          width: 400,
+          width: 450,
           p: 2,
         }}
       >
@@ -50,11 +50,13 @@ export default function SummaryModal(props) {
               <Box>
                 <CardMedia
                   image={elem.url}
-                  sx={{ height: 100, width: 100, mr: 3 }}
+                  sx={{ height: 100, width: 150, mr: 3 }}
                 />
               </Box>
               <Grid>
-                <Typography variant="h6">{elem.name}</Typography>
+                <Typography variant="h6" sx={{ fontSize: "17px" }}>
+                  {elem.name}
+                </Typography>
                 <Typography variant="subtitle1">Qty {elem.quantity}</Typography>
                 <Typography variant="subtitle1">${elem.price}</Typography>
               </Grid>

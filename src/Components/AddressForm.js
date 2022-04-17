@@ -42,7 +42,8 @@ export default function AddressForm(props) {
         setLastName(res.data.shippingAddress.lastName);
         setAddress1(res.data.shippingAddress.address1);
         setAddress2(
-          res.data.shippingAddress.address2 !== "NULL"
+          res.data.shippingAddress.address2 !== "NULL" &&
+            res.data.shippingAddress.address2 !== "UNDEFINED"
             ? res.data.shippingAddress.address2
             : ""
         );
