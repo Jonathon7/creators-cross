@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useCategories from "../hooks/useCategories";
 import axios from "axios";
 import Modal from "@mui/material/Modal";
@@ -16,6 +16,9 @@ export default function ProductEntry(props) {
   const { categories } = useCategories();
   const [category, setCategory] = useState(1);
   const [name, setName] = useState("");
+  const [categoryAttributes, setCategoryAttributes] = useState([]);
+  const [categoryAttribute, setCategoryAttribute] = useState("");
+  const [attribute, setAttribute] = useState("");
   const [manufacturer, setManufacturer] = useState("");
   const [mark, setMark] = useState("");
   const [year, setYear] = useState(new Date().getFullYear());
@@ -24,11 +27,22 @@ export default function ProductEntry(props) {
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
 
+  useEffect(() => {
+    axios
+      .get("/api/category-attributes")
+      .then((res) => {
+        setCategoryAttributes(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const enterProduct = () => {
     axios
       .post("/api/product", {
         category,
         name,
+        categoryAttribute,
+        attribute,
         manufacturer,
         mark,
         year,
@@ -44,6 +58,10 @@ export default function ProductEntry(props) {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleCategoryAttributeChange = (e) => {
+    setCategoryAttribute(e.target.value);
   };
 
   return (
@@ -88,6 +106,36 @@ export default function ProductEntry(props) {
                 );
               })}
             </Select>
+          </FormControl>
+          <FormControl margin="normal">
+            <InputLabel id="category-attribute-label">
+              Category Attribute
+            </InputLabel>
+            <Select
+              labelId="category-attribute-label"
+              id="category-attribute"
+              label="Category Attribute"
+              value={categoryAttribute}
+              onChange={handleCategoryAttributeChange}
+            >
+              {categoryAttributes.map((elem) => {
+                return (
+                  <MenuItem
+                    value={elem.category_attribute_id}
+                    key={elem.category_attribute_id}
+                  >
+                    {elem.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+          <FormControl margin="normal">
+            <TextField
+              label="Attribute"
+              value={attribute}
+              onChange={(e) => setAttribute(e.target.value)}
+            />
           </FormControl>
           <FormControl margin="normal">
             <TextField

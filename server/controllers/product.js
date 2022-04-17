@@ -17,6 +17,8 @@ const getProducts = async (req, res) => {
 const getProduct = async (req, res) => {
   let { id, categoryId } = req.params;
 
+  if (isNaN(categoryId)) return res.sendStatus(200);
+
   const sql1 = `SELECT category_attribute_id FROM category_attribute WHERE category_id = ${categoryId}`;
 
   const sql2 = `SELECT product_id, product.name, category.name AS 'category_name', product.description, manufacturer, mark, year, product.category_id, price, url, inventory.inventory_id, quantity FROM product
@@ -40,10 +42,10 @@ const getProduct = async (req, res) => {
   pool.query(sql1, (err, results) => {
     if (err) throw err;
 
-    pool.query(results.length ? sql3 : sql2, (error, result) => {
-      if (error) throw error;
+    pool.query(results.length ? sql3 : sql2, (error2, result2) => {
+      if (error2) throw error2;
 
-      res.status(200).json(result);
+      res.status(200).json(result2);
     });
   });
 };
@@ -199,6 +201,8 @@ const addProduct = async (req, res) => {
   const {
     category,
     name,
+    categoryAttribute,
+    attribute,
     manufacturer,
     mark,
     year,
@@ -208,6 +212,21 @@ const addProduct = async (req, res) => {
     price,
   } = req.body;
 
+  let attributeId;
+
+  if (categoryAttribute && attribute) {
+    await poolPromise
+      .query(
+        `SELECT attribute_id FROM attribute WHERE category_attribute_id = ${categoryAttribute} AND value = '${attribute}';`
+      )
+      .then((res) => {
+        attributeId = res[0][0].attribute_id;
+      })
+      .catch((err) => {
+        return res.status(400).json(err);
+      });
+  }
+
   await poolPromise
     .query(
       `INSERT INTO inventory(quantity, created_at, modified_at) VALUES(${quantity}, UTC_TIMESTAMP(), UTC_TIMESTAMP())`
@@ -216,8 +235,8 @@ const addProduct = async (req, res) => {
       return res.status(400).json(err);
     });
 
-  const sql = `INSERT INTO product(name, description, manufacturer, mark, year, category_id, inventory_id, price, url, created_at, modified_at)
-    VALUES('${name}', '${description}', '${manufacturer}', '${mark}', ${year}, ${category}, LAST_INSERT_ID(), ${price}, '${URL}', UTC_TIMESTAMP(), UTC_TIMESTAMP());`;
+  const sql = `INSERT INTO product(name, description, manufacturer, mark, year, category_id, inventory_id, attribute_id, price, url, created_at, modified_at)
+    VALUES('${name}', '${description}', '${manufacturer}', '${mark}', ${year}, ${category}, LAST_INSERT_ID(), ${attributeId}, ${price}, '${URL}', UTC_TIMESTAMP(), UTC_TIMESTAMP());`;
 
   pool.query(sql, (err) => {
     if (err) return res.status(400).json(err);
@@ -253,6 +272,7 @@ const updateProduct = async (req, res) => {
     .query(
       `UPDATE inventory SET quantity = ${quantity}, modified_at = UTC_TIMESTAMP() WHERE inventory_id = ${inventoryId};`
     )
+
     .catch((err) => {
       return res.status(400).json(err);
     });
@@ -322,6 +342,14 @@ const getAttribute = (req, res) => {
   );
 };
 
+const getCategoryAttributes = (req, res) => {
+  pool.query(`SELECT * FROM category_attribute`, (err, results) => {
+    if (err) return res.status(400).json(err);
+
+    res.status(200).json(results);
+  });
+};
+
 module.exports = {
   getProducts,
   getProduct,
@@ -338,4 +366,5 @@ module.exports = {
   getCategories,
   getCategoryAttribute,
   getAttribute,
+  getCategoryAttributes,
 };
