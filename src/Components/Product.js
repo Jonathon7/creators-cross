@@ -115,7 +115,7 @@ export default function Product() {
               component="h1"
               sx={{
                 fontWeight: "lighter",
-                fontSize: ["40px", "auto", "auto"],
+                fontSize: ["30px", "auto", "auto"],
               }}
             >
               {product.name}
