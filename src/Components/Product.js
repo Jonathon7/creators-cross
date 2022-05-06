@@ -19,9 +19,9 @@ const sections = [
   { title: "Rings", url: "/category/rings" },
   { title: "Bracelets", url: "/category/bracelets" },
   { title: "Pendants", url: "/category/pendants" },
-  { title: "Gifts", url: "#" },
-  { title: "About Us", url: "#" },
-  { title: "Blog", url: "#" },
+  { title: "Gifts", url: "/about-us" },
+  { title: "About Us", url: "/about-us" },
+  { title: "Blog", url: "/blog" },
 ];
 
 let timeout = null;
