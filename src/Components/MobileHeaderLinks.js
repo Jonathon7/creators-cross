@@ -34,7 +34,7 @@ export default function MobileHeaderLinks() {
           mb: 2,
         }}
       >
-        <Button onClick={handleClick} variant="outlined" sx={{ mr: 8 }}>
+        <Button onClick={handleClick} variant="outlined" sx={{ mr: [1, 8, 8] }}>
           Browse Products
         </Button>
         <Link

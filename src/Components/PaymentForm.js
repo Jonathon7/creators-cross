@@ -172,10 +172,16 @@ export default function PaymentForm(props) {
                   <ListItemText
                     primary={product.name}
                     secondary={getCategory(product.category_id)}
+                    primaryTypographyProps={{
+                      fontSize: "12px",
+                    }}
+                    secondaryTypographyProps={{
+                      fontSize: "12px",
+                    }}
                   />
                   <Typography
                     variant="subtitle2"
-                    sx={{ width: ["45%", "65%", "65%s"], ml: 2 }}
+                    sx={{ width: ["40%", "65%", "65%s"], ml: 2 }}
                   >
                     Qty {product.quantity}
                   </Typography>
