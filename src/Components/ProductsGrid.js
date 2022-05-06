@@ -35,6 +35,8 @@ export default function ProductsGrid(props) {
         </Typography>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
           {products.map((post, index) => {
+            if (post.name.includes("BRACELET")) return <></>;
+            if (post.name.includes("RING")) return <></>;
             return <FeaturedPost post={post} key={index} />;
           })}
         </Grid>
