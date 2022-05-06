@@ -15,7 +15,7 @@ export default function CartItem(props) {
           pr: [2, 10, 10],
           pt: 2,
           pb: 2,
-          width: "fit-content",
+          width: ["95%", "fit-content", "fit-content"],
         }}
       >
         <Grid container direction="row" alignItems="center">
