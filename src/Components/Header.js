@@ -37,6 +37,11 @@ export default function Header(props) {
         >
           {title}
         </Typography>
+        <img
+          src="https://i.imgur.com/xnrpm9z.png"
+          alt="logo"
+          style={{ width: "auto", height: "40px" }}
+        ></img>
         {props.logout && (
           <Button size="small" onClick={props.logout}>
             Logout
