@@ -15,8 +15,8 @@ const sections = [
   { title: "Bracelets", url: "/category/bracelets" },
   { title: "Pendants", url: "/category/pendants" },
   { title: "Gifts", url: "/category/gifts" },
-  { title: "About Us", url: "#" },
-  { title: "Blog", url: "#" },
+  { title: "About Us", url: "/about-us" },
+  { title: "Blog", url: "/blog" },
 ];
 
 export default function Cart() {

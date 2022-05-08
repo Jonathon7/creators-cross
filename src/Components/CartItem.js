@@ -15,36 +15,64 @@ export default function CartItem(props) {
           pr: [2, 10, 10],
           pt: 2,
           pb: 2,
-          width: "fit-content",
+          width: ["95%", "fit-content", "fit-content"],
         }}
       >
         <Grid container direction="row" alignItems="center">
           <CardMedia
             image={props.cartItem.url}
-            sx={{ height: 100, width: 160, m: [2, 0, 0] }}
+            sx={{
+              height: [100, 100, 100],
+              width: [100, 140, 160],
+              m: [2, 0, 0],
+            }}
           />
-          <Box>
-            <Typography variant="subtitle1">{props.cartItem.name}</Typography>
+          <Box sx={{ ml: [0, 0, 2] }}>
+            <Typography
+              variant="subtitle1"
+              sx={{ fontSize: ["13px", "16px", "16px"] }}
+            >
+              {props.cartItem.name}
+            </Typography>
             {props.cartItem.value && (
-              <Typography variant="subtitle1">
+              <Typography
+                variant="subtitle1"
+                sx={{ fontSize: ["13px", "16px", "16px"] }}
+              >
                 {props.cartItem.category_id === 2 && "Size"}{" "}
                 {props.cartItem.value}
               </Typography>
             )}
-            <Typography variant="subtitle1">
+            <Typography
+              variant="subtitle1"
+              sx={{ fontSize: ["13px", "16px", "16px"] }}
+            >
               Qty {props.cartItem.quantity}
             </Typography>
-            <Typography variant="subtitle1">${props.cartItem.price}</Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography
+              variant="subtitle1"
+              sx={{ fontSize: ["13px", "16px", "16px"] }}
+            >
+              ${props.cartItem.price}
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: ["90%", "100%", "100%"],
+              }}
+            >
               <Button
                 size="small"
                 onClick={() => props.cartToFavorites(props.cartItem)}
+                sx={{ display: ["none", "block", "block"] }}
               >
                 Move to Favorites
               </Button>
               <Button
                 size="small"
                 onClick={() => props.removeCartItem(props.cartItem.product_id)}
+                sx={{ ml: "auto" }}
               >
                 Remove
               </Button>

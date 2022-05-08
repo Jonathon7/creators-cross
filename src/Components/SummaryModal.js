@@ -19,9 +19,9 @@ export default function SummaryModal(props) {
         sx={{
           position: "absolute",
           top: 0,
-          right: 10,
+          right: [0, 10, 10],
           background: "#fff",
-          width: 450,
+          width: ["100%", 450, 450],
           p: 2,
         }}
       >
@@ -35,7 +35,7 @@ export default function SummaryModal(props) {
             <Typography variant="subtitle1" display="inline">
               Item added to cart
             </Typography>
-            <Button href="/cart" variant="outlined" size="small" sx={{ ml: 1 }}>
+            <Button href="/cart" variant="outlined" size="small" sx={{ ml: 2 }}>
               checkout
             </Button>
           </Box>
@@ -50,15 +50,32 @@ export default function SummaryModal(props) {
               <Box>
                 <CardMedia
                   image={elem.url}
-                  sx={{ height: 100, width: 150, mr: 3 }}
+                  sx={{
+                    height: [85, 100, 100],
+                    width: [110, 140, 140],
+                    mr: [3],
+                  }}
                 />
               </Box>
               <Grid>
-                <Typography variant="h6" sx={{ fontSize: "17px" }}>
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: ["14px", "16px", "16px"] }}
+                >
                   {elem.name}
                 </Typography>
-                <Typography variant="subtitle1">Qty {elem.quantity}</Typography>
-                <Typography variant="subtitle1">${elem.price}</Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontSize: ["14px", "16px", "16px"] }}
+                >
+                  Qty {elem.quantity}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontSize: ["14px", "16px", "16px"] }}
+                >
+                  ${elem.price}
+                </Typography>
               </Grid>
             </Grid>
           );

@@ -34,13 +34,13 @@ export default function MobileHeaderLinks() {
           mb: 2,
         }}
       >
-        <Button onClick={handleClick} variant="outlined" sx={{ mr: 8 }}>
+        <Button onClick={handleClick} variant="outlined" sx={{ mr: [1, 8, 8] }}>
           Browse Products
         </Button>
         <Link
           color="inherit"
           variant="body2"
-          href="#"
+          href="/about-us"
           sx={{ textDecoration: "none" }}
         >
           About Us
@@ -48,7 +48,7 @@ export default function MobileHeaderLinks() {
         <Link
           color="inherit"
           variant="body2"
-          href="#"
+          href="/blog"
           sx={{ textDecoration: "none" }}
         >
           Blog

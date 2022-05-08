@@ -11,10 +11,12 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import axios from "axios";
 import MobileHeaderLinks from "./MobileHeaderLinks";
+import Subscribe from "./Subscribe";
 
 export default function Header(props) {
   const { sections, title } = props;
   const [cartLength, setCartLength] = useState(null);
+  const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
 
   useEffect(() => {
     if (!props.cart) {
@@ -23,6 +25,10 @@ export default function Header(props) {
       });
     }
   }, [cartLength, props.cart]);
+
+  const toggleModal = () => {
+    setSubscribeModalOpen(!subscribeModalOpen);
+  };
 
   return (
     <React.Fragment>
@@ -47,7 +53,9 @@ export default function Header(props) {
             Logout
           </Button>
         )}
-        <Button size="small">Subscribe</Button>
+        <Button size="small" onClick={toggleModal}>
+          Subscribe
+        </Button>
         <IconButton href="/favorite">
           <FavoriteBorderIcon />
         </IconButton>
@@ -92,6 +100,7 @@ export default function Header(props) {
         </Grid>
         <MobileHeaderLinks />
       </Toolbar>
+      <Subscribe open={subscribeModalOpen} close={toggleModal} />
     </React.Fragment>
   );
 }
