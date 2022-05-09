@@ -3,10 +3,9 @@ import axios from "axios";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Header from "./Header";
-import MainFeaturedPost from "./MainFeaturedPost";
+import HeroImage from "./HeroImage";
 import ProductsGrid from "./ProductsGrid";
 import Footer from "./Footer";
-import hero from "../assets/bracelet_hero.jpg";
 
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
@@ -17,13 +16,6 @@ const sections = [
   { title: "About Us", url: "/about-us" },
   { title: "Blog", url: "/blog" },
 ];
-
-const mainFeaturedPost = {
-  title: "Creator's Cross Jewelry",
-  description:
-    "Every piece is made from vintage, silver-plated or sterling silver flatware. Our selection is all hand-made, unique, custom designs.",
-  image: hero,
-};
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -44,7 +36,7 @@ export default function Home() {
       <CssBaseline />
       <Container>
         <Header title="Creator's Cross" sections={sections} />
-        <MainFeaturedPost post={mainFeaturedPost} />
+        <HeroImage />
       </Container>
       <ProductsGrid posts={products} header="Featured Products" />
       <Footer title="Creator's Cross" description="" />
