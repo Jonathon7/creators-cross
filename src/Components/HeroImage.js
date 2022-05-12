@@ -1,5 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import { ReactComponent as MobileHero } from "../assets/CC-Hero-Mobile.svg";
+import { ReactComponent as DesktopHero } from "../assets/CC-Hero-Desktop.svg";
 
 const Image = () => {
   const [width, setWidth] = React.useState(window.innerWidth);
@@ -14,19 +17,19 @@ const Image = () => {
 
   return width < breakpoint ? (
     <React.Fragment>
-      <img
-        width="100%"
-        src="https://i.imgur.com/Aumz1ep.png"
-        alt="Creator's Cross Jewelry Display"
-      />
+      <Box sx={{ width: "100%" }}>
+        <Link href="#">
+          <MobileHero />
+        </Link>
+      </Box>
     </React.Fragment>
   ) : (
     <React.Fragment>
-      <img
-        width="100%"
-        src="https://i.imgur.com/UtjfNB3.png"
-        alt="Creator's Cross Jewelry Display"
-      />
+      <Box sx={{ width: "100%" }}>
+        <Link href="#">
+          <DesktopHero />
+        </Link>
+      </Box>
     </React.Fragment>
   );
 };
