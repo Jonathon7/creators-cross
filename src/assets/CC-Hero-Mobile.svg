@@ -5,12 +5,11 @@
 <style type="text/css">
 	.st0{fill:#FFFFFF;}
 	.st1{font-family:'MyriadPro-Regular';}
-	.st2{font-size:21px;}
-	.st3{fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
-	.st4{font-size:16.7198px;}
-	.st5{font-family:'Helvetica';}
-	.st6{font-size:48px;}
-	.st7{fill:#F2F2F2;}
+	.st2{font-size:24px;}
+	.st3{font-family:'Helvetica';}
+	.st4{font-size:48px;}
+	.st5{fill:#F2F2F2;}
+	.st6{font-size:21px;}
 </style>
 <rect y="-1" class="st0" width="500" height="465"/>
 <image style="overflow:visible;" width="2896" height="2218" xlink:href="data:image/jpeg;base64,/9j/4RrFRXhpZgAASUkqAAgAAAAIAA8BAgAGAAAAbgAAABABAgANAAAAdAAAABoBBQABAAAAggAA
@@ -23109,12 +23108,8 @@ rsfp/wBv/vXvR49eHXh+P9h/vZ9+695nrx+jf64/3v34eXXjw67/ALJ/5B/3oe/efWhx64j8/wCt
 Z615dd/kf778+9eXW/M9dD3s9eXro/Q/6x9+HXvPr35H+sffutdd/j/Ye9dW8uuh+f8Affj3s9aH
 Drtf+K/7170evDh1/9X/2Q==" transform="matrix(0.1417 0 0 0.1326 57 150)">
 </image>
-<text transform="matrix(1 0 0 1 28.4868 123.7612)" class="st1 st2">Crosses and Jewelry to Glorify our Creator</text>
-<g>
-	<rect x="28.49" y="150" class="st3" width="101.51" height="40.61"/>
-	<text transform="matrix(1 0 0 1 43.1792 175.2104)" class="st1 st4">Shop Now</text>
-</g>
-<text transform="matrix(1 0 0 1 28.4868 73.2476)" class="st5 st6">Creator’s Cross</text>
-<rect y="464" class="st7" width="500" height="76"/>
-<text transform="matrix(1 0 0 1 91.4844 507.8867)" class="st1 st2">Free shipping on all orders above $50</text>
+<text transform="matrix(1 0 0 1 43.6621 123.7612)" class="st1 st2">Crosses and Jewelry to Glorify our Creator</text>
+<text transform="matrix(1 0 0 1 84.7876 73.2476)" class="st3 st4">Creator’s Cross</text>
+<rect y="464" class="st5" width="500" height="76"/>
+<text transform="matrix(1 0 0 1 91.4844 507.8867)" class="st1 st6">Free shipping on all orders above $50</text>
 </svg>
