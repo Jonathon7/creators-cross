@@ -107,6 +107,7 @@ export default function PaymentForm(props) {
             form.current,
             process.env.REACT_APP_PUBLIC_KEY
           );
+
           resolve(res.data);
         })
         .catch((err) => console.log(err));
@@ -156,7 +157,7 @@ export default function PaymentForm(props) {
 
   return (
     <React.Fragment>
-      <Box ref={form}>
+      <Box ref={form} component="form">
         <Typography variant="h6" gutterBottom>
           Order summary
         </Typography>
