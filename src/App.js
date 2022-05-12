@@ -6,7 +6,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import routes from "./routes";
 
 const stripePromise = loadStripe(
-  "pk_live_51JQGylG8zAC237SMmcSkt0xxil9ABlWU3jb9gMfqcgUOdjGPD3zqGZR0ancAGm4BpD4b2SLUm6zWNZzomRlKM3UZ000FV2qWCw"
+  "pk_test_51JQGylG8zAC237SM9lLKzoCSuvCL3ulcyieOpF0Qbv9eMIJUGsM2VEnAK1xFQMSBpvE1IG1bxQeTL7pri37bfzkQ00sUBwgxcw"
 );
 
 function App() {

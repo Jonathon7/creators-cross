@@ -1,4 +1,4 @@
-const stripe = require("stripe")(process.env.SK_LIVE);
+const stripe = require("stripe")(process.env.SK_TEST);
 const axios = require("axios");
 const xml2js = require("xml2js");
 const { pool } = require("../db");
