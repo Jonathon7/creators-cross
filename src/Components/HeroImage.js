@@ -17,19 +17,19 @@ const Image = () => {
 
   return width < breakpoint ? (
     <React.Fragment>
-      <Box sx={{ width: "100%" }}>
-        <Link href="#">
+      <Link href="#">
+        <Box sx={{ width: "100%" }}>
           <MobileHero />
-        </Link>
-      </Box>
+        </Box>
+      </Link>
     </React.Fragment>
   ) : (
     <React.Fragment>
-      <Box sx={{ width: "100%" }}>
-        <Link href="#">
+      <Link href="#">
+        <Box sx={{ width: "100%" }}>
           <DesktopHero />
-        </Link>
-      </Box>
+        </Box>
+      </Link>
     </React.Fragment>
   );
 };
