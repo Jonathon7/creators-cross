@@ -86,7 +86,7 @@ export default function AddToCart(props) {
   return (
     <React.Fragment>
       <Snackbar open={isOpen} message={message} severity={severity} />
-      <Box sx={{ maxWidth: 150, ml: 3, mb: 3 }}>
+      <Box sx={{ maxWidth: [140, 150, 150], ml: [2, 3, 3], mb: 3 }}>
         <Grid
           container
           direction="row"

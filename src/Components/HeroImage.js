@@ -17,7 +17,7 @@ const Image = () => {
 
   return width < breakpoint ? (
     <React.Fragment>
-      <Link href="#" sx={{ textDecoration: "none" }}>
+      <Link href="/all-products" sx={{ textDecoration: "none" }}>
         <Box sx={{ width: "100%" }}>
           <MobileHero />
         </Box>
@@ -25,7 +25,7 @@ const Image = () => {
     </React.Fragment>
   ) : (
     <React.Fragment>
-      <Link href="#" sx={{ textDecoration: "none" }}>
+      <Link href="/all-products" sx={{ textDecoration: "none" }}>
         <Box sx={{ width: "100%" }}>
           <DesktopHero />
         </Box>

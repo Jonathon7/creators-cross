@@ -33,8 +33,8 @@ export default function About() {
           <Typography variant="subtitle1" component="p">
             SUPPOSE you would like to give a gift to your children or
             grandchildren or perhaps to other family members, friends, or even
-            service personnel of the armed forces a. A memento from the
-            Generation that took a sentimental journey and united America.
+            service personnel of the armed forces. A memento from the Generation
+            that took a sentimental journey and united America.
           </Typography>
           <br />
           <Typography variant="subtitle1" component="p">
@@ -45,7 +45,7 @@ export default function About() {
           <br />
           <Typography variant="subtitle1" component="p">
             If you desire this service for a keepsake or gift and have your own
-            flatware give us a call & hopefully we'll work to create a lasting
+            flatware, give us a call & hopefully we'll work to create a lasting
             memory.
           </Typography>
         </Box>

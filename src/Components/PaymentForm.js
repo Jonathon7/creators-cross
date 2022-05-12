@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -30,6 +31,7 @@ export default function PaymentForm(props) {
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
+  const form = useRef();
 
   useEffect(() => {
     axios
@@ -99,6 +101,12 @@ export default function PaymentForm(props) {
       axios
         .post("/api/order", { orderNumber, amount, type, status })
         .then((res) => {
+          emailjs.sendForm(
+            process.env.REACT_APP_SERVICE_ID,
+            process.env.REACT_APP_TEMPLATE_ID,
+            form.current,
+            process.env.REACT_APP_PUBLIC_KEY
+          );
           resolve(res.data);
         })
         .catch((err) => console.log(err));
@@ -148,7 +156,7 @@ export default function PaymentForm(props) {
 
   return (
     <React.Fragment>
-      <Box>
+      <Box ref={form}>
         <Typography variant="h6" gutterBottom>
           Order summary
         </Typography>
@@ -212,7 +220,7 @@ export default function PaymentForm(props) {
 
         <ListItem sx={{ mt: 1 }}>
           <ListItemText secondary="Total" />
-          <Typography variant="subtitle2">
+          <Typography variant="subtitle2" name="amount">
             ${(subtotal + shippingPrice + tax).toFixed(2)}
           </Typography>
         </ListItem>
