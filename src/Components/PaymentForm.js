@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -27,6 +28,7 @@ export default function PaymentForm(props) {
   const [categories, setCategories] = useState([]);
   const [shippingPrice] = useState(1.0);
   const [tax] = useState(0.0);
+  const [processing, setProcessing] = useState(false);
 
   const navigate = useNavigate();
   const stripe = useStripe();
@@ -84,10 +86,12 @@ export default function PaymentForm(props) {
         });
 
         if (paymentResult.error) {
+          setProcessing(false);
           alert(paymentResult.error.message);
         } else {
           if (paymentResult.paymentIntent.status === "succeeded") {
             const { id, amount, object, status } = paymentResult.paymentIntent;
+            setProcessing(false);
             await confirmOrderPlacement(id, amount, object, status);
             props.finish();
           }
@@ -138,6 +142,7 @@ export default function PaymentForm(props) {
       return;
     }
 
+    setProcessing(true);
     pay();
   };
 
@@ -304,7 +309,9 @@ export default function PaymentForm(props) {
           </Grid>
           <Grid container justifyContent="flex-end">
             <Button onClick={props.handleBack}>Back</Button>
-            <Button onClick={validate}>Place Order</Button>
+            <LoadingButton onClick={validate} loading={processing}>
+              Place Order
+            </LoadingButton>
           </Grid>
         </Grid>
       </Box>
