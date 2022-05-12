@@ -25,7 +25,7 @@ export default function PaymentForm(props) {
   const [error, setError] = useState("");
   const [complete, setComplete] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [shippingPrice] = useState(8.99);
+  const [shippingPrice] = useState(1.0);
   const [tax] = useState(0.0);
 
   const navigate = useNavigate();
