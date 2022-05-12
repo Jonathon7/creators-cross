@@ -4,7 +4,7 @@ const xml2js = require("xml2js");
 const { pool } = require("../db");
 
 const createPaymentIntent = async (req, res) => {
-  const shippingAmount = req.session.subtotal < 40 ? 1.0 : 0;
+  const shippingAmount = req.session.subtotal < 40 ? 7.99 : 0;
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount: (req.session.subtotal + shippingAmount) * 100,
