@@ -350,6 +350,31 @@ const getCategoryAttributes = (req, res) => {
   });
 };
 
+const getRingSizes = (req, res) => {
+  const sql = `SELECT attribute_id FROM product WHERE name = '${req.params.name}'`;
+
+  pool.query(sql, (err, results) => {
+    if (err) return res.status(400).json(err);
+
+    let attributeIds = "";
+
+    for (let i = 0; i < results.length; i++) {
+      attributeIds += String(results[i].attribute_id);
+      if (i != results.length - 1) {
+        attributeIds += ",";
+      }
+    }
+
+    const sql2 = `SELECT value FROM attribute WHERE attribute_id IN (${attributeIds})`;
+
+    pool.query(sql2, (err, results) => {
+      if (err) return res.status(400).json(err);
+
+      res.status(200).json(results);
+    });
+  });
+};
+
 module.exports = {
   getProducts,
   getProduct,
@@ -367,4 +392,5 @@ module.exports = {
   getCategoryAttribute,
   getAttribute,
   getCategoryAttributes,
+  getRingSizes,
 };

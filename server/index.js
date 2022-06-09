@@ -59,6 +59,7 @@ app.get("/api/categories/", product.getCategories);
 app.get("/api/category-attributes/", product.getCategoryAttributes);
 app.get("/api/category-attribute/:categoryId", product.getCategoryAttribute);
 app.get("/api/attribute/:categoryAttributeId", product.getAttribute);
+app.get("/api/ring-sizes/:name", product.getRingSizes);
 app.post("/api/product", product.addProduct);
 app.put("/api/product", product.updateProduct);
 app.delete("/api/product/:productId/:inventoryId", product.deleteProduct);

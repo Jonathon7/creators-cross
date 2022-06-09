@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import useCategories from "../hooks/useCategories";
 import useProduct from "../hooks/useProduct";
 import Modal from "@mui/material/Modal";
@@ -12,8 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import AvailableSizes from "./AvailableSizes";
 
 export default function ProductEntry(props) {
+  const [sizes, setSizes] = useState([]);
   const { categories } = useCategories();
   const {
     name,
@@ -38,6 +40,15 @@ export default function ProductEntry(props) {
     setPrice,
     updateProduct,
   } = useProduct(props.id, props.categoryId);
+
+  useEffect(() => {
+    axios
+      .get(`/api/ring-sizes/${name}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }, [name]);
 
   const update = async () => {
     const updatedProduct = await updateProduct();
@@ -186,6 +197,7 @@ export default function ProductEntry(props) {
               onChange={(e) => setPrice(e.target.value)}
             />
           </FormControl>
+          <AvailableSizes />
           <Button variant="outlined" style={{ marginTop: 20 }} onClick={update}>
             Update
           </Button>
