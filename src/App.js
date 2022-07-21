@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import ReactGA from "react-ga";
 import routes from "./routes";
 
 const stripePromise = loadStripe(
@@ -10,6 +11,14 @@ const stripePromise = loadStripe(
 );
 
 function App() {
+  const setGA = () => {
+    ReactGA.initialize(process.env.REACT_APP_TRACKING_ID);
+  };
+
+  useEffect(() => {
+    setGA();
+  }, []);
+
   return (
     <Elements stripe={stripePromise}>
       <BrowserRouter>{routes}</BrowserRouter>

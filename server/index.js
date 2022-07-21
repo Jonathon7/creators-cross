@@ -56,6 +56,7 @@ app.get("/api/product/:id/:categoryId", product.getProduct);
 app.get("/api/product/:name", product.getProductsByName);
 app.get("/api/products/:category", product.getProductsByCategory);
 app.get("/api/categories/", product.getCategories);
+app.get("/api/category/:name", product.getCategory);
 app.get("/api/category-attributes/", product.getCategoryAttributes);
 app.get("/api/category-attribute/:categoryId", product.getCategoryAttribute);
 app.get("/api/attribute/:categoryAttributeId", product.getAttribute);

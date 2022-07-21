@@ -196,6 +196,16 @@ const getCategories = (req, res) => {
   });
 };
 
+const getCategory = (req, res) => {
+  const sql = `SELECT title, description FROM category WHERE name = '${req.params.name}';`;
+
+  pool.query(sql, (err, result) => {
+    if (err) throw err;
+
+    res.status(200).json(result);
+  });
+};
+
 const addProduct = async (req, res) => {
   const poolPromise = pool.promise();
   const {
@@ -389,6 +399,7 @@ module.exports = {
   getProductsByName,
   getProductsByCategory,
   getCategories,
+  getCategory,
   getCategoryAttribute,
   getAttribute,
   getCategoryAttributes,

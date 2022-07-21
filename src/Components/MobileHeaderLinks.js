@@ -8,7 +8,7 @@ import Menu from "./Menu";
 const products = [
   { name: "Crosses", url: "/category/crosses" },
   { name: "Rings", url: "/category/rings" },
-  { name: "Bracelets", url: "/category/bracelets" },
+  { name: "Bracelets", url: "/category/spoon-bracelet" },
   { name: "Pendants", url: "/category/pendants" },
   { name: "Gifts", url: "/category/gift" },
 ];

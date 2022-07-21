@@ -29,7 +29,7 @@ function Copyright() {
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
   { title: "Rings", url: "/category/rings" },
-  { title: "Bracelets", url: "/category/bracelets" },
+  { title: "Bracelets", url: "/category/spoon-bracelet" },
   { title: "Pendants", url: "/category/pendants" },
   { title: "Gifts", url: "/category/gifts" },
   { title: "About Us", url: "/about-us" },

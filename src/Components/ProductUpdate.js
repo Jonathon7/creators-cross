@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import useCategories from "../hooks/useCategories";
 import useProduct from "../hooks/useProduct";
 import Modal from "@mui/material/Modal";
@@ -15,7 +15,7 @@ import axios from "axios";
 import AvailableSizes from "./AvailableSizes";
 
 export default function ProductEntry(props) {
-  const [sizes, setSizes] = useState([]);
+  // const [sizes, setSizes] = useState([]);
   const { categories } = useCategories();
   const {
     name,
