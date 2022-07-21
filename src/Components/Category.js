@@ -6,6 +6,7 @@ import Header from "./Header";
 import ProductsGrid from "./ProductsGrid";
 import Footer from "./Footer";
 import Typography from "@mui/material/Typography";
+import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 
 const sections = [
@@ -43,6 +44,11 @@ export default function Category() {
 
   return (
     <React.Fragment>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{category.title} - Creator's Cross</title>
+        <meta name="description" content={category.description} />
+      </Helmet>
       <Container>
         <Header title={"Creator's Cross"} sections={sections} />
       </Container>
