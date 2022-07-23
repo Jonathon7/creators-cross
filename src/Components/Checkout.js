@@ -36,7 +36,7 @@ function getStepContent(step, handleBack, handleNext, finish) {
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
   { title: "Rings", url: "/category/rings" },
-  { title: "Bracelets", url: "/category/spoon-bracelet" },
+  { title: "Bracelets", url: "/category/spoon-bracelets" },
   { title: "Pendants", url: "/category/pendants" },
   { title: "Gifts", url: "/category/gifts" },
   { title: "About Us", url: "/about-us" },

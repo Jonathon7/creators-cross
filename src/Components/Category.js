@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
   { title: "Rings", url: "/category/rings" },
-  { title: "Bracelets", url: "/category/spoon-bracelet" },
+  { title: "Bracelets", url: "/category/spoon-bracelets" },
   { title: "Pendants", url: "/category/pendants" },
   { title: "Gifts", url: "/category/gifts" },
   { title: "About Us", url: "/about-us" },
@@ -44,11 +44,14 @@ export default function Category() {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>{category.title} - Creator's Cross</title>
-        <meta name="description" content={category.description} />
-      </Helmet>
+      {category.title && (
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>{category.title} - Creator's Cross</title>
+          <meta name="description" content={category.description} />
+        </Helmet>
+      )}
+
       <Container>
         <Header title={"Creator's Cross"} sections={sections} />
       </Container>

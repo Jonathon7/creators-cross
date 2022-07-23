@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom";
 const sections = [
   { title: "Crosses", url: "/category/crosses" },
   { title: "Rings", url: "/category/rings" },
-  { title: "Bracelets", url: "/category/spoon-bracelet" },
+  { title: "Bracelets", url: "/category/spoon-bracelets" },
   { title: "Pendants", url: "/category/pendants" },
   { title: "Gifts", url: "/about-us" },
   { title: "About Us", url: "/about-us" },
