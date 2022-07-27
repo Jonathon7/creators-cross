@@ -464,7 +464,7 @@ export default function AddressForm(props) {
   );
 }
 
-var states = [
+let states = [
   { label: "AL" },
   { label: "AK" },
   { label: "AZ" },

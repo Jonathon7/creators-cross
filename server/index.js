@@ -81,6 +81,7 @@ app.get(
   checkout.validateAddress
 );
 app.get("/api/address-information", checkout.getAddressInformation);
+app.get("/api/delivery-calculator", checkout.getDeliveryEstimate);
 app.post("/create-payment-intent", checkout.createPaymentIntent);
 app.post("/api/address-information", checkout.saveAddressInformation);
 app.post("/api/order", checkout.confirmOrderPlacement);

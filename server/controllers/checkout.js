@@ -187,10 +187,16 @@ const saveProductsToDb = (cart, orderId) => {
   }
 };
 
+const getDeliveryEstimate = (req, res) => {
+  console.log(req.session.shippingAddress.zip);
+  res.sendStatus(200);
+};
+
 module.exports = {
   createPaymentIntent,
   validateAddress,
   saveAddressInformation,
   getAddressInformation,
   confirmOrderPlacement,
+  getDeliveryEstimate,
 };

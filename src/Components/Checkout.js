@@ -11,15 +11,24 @@ import Typography from "@mui/material/Typography";
 import Header from "./Header";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
+import ShippingForm from "./ShippingForm";
 import { useNavigate } from "react-router-dom";
 
-const steps = ["Address", "Payment"];
+const steps = ["Address", "Shipping", "Payment"];
 
 function getStepContent(step, handleBack, handleNext, finish) {
   switch (step) {
     case 0:
       return <AddressForm handleNext={handleNext} />;
     case 1:
+      return (
+        <ShippingForm
+          step={step}
+          handleBack={handleBack}
+          handleNext={handleNext}
+        />
+      );
+    case 2:
       return (
         <PaymentForm
           step={step}
@@ -43,7 +52,7 @@ const sections = [
   { title: "Blog", url: "/blog" },
 ];
 
-export default function Checkout(props) {
+export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
   const navigate = useNavigate();
 
