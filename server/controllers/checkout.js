@@ -187,9 +187,69 @@ const saveProductsToDb = (cart, orderId) => {
   }
 };
 
-const getDeliveryEstimate = (req, res) => {
-  console.log(req.session.shippingAddress.zip);
-  res.sendStatus(200);
+const getDeliveryEstimate = async (req, res) => {
+  const dates = {};
+
+  const BASE_URL =
+    "https://secure.shippingapis.com/ShippingAPI.dll?API=SDCGetLocations&XML=";
+
+  const XML = `<SDCGetLocationsRequest USERID="${process.env.USPS_ID}">
+               <MailClass>0</MailClass>
+               <OriginZIP>79703</OriginZIP>
+               <DestinationZIP>${req.session.shippingAddress.zip}</DestinationZIP>
+               <NonEMDestType>1</NonEMDestType>
+               </SDCGetLocationsRequest>`;
+
+  const response = await axios.get(BASE_URL + XML, {
+    headers: { "Content-Type": "text/xml" },
+  });
+
+  // console.log(response.data.SDCGetLocationsResponse);
+
+  xml2js.parseString(response.data, (err, result) => {
+    if (err) {
+      throw err;
+    }
+
+    for (
+      let i = 0;
+      i < result.SDCGetLocationsResponse.Expedited[0].Commitment.length;
+      i++
+    ) {
+      if (
+        result.SDCGetLocationsResponse.Expedited[0].Commitment[i]
+          .MailClass[0] === "1"
+      ) {
+        dates.PriorityMailExpress =
+          result.SDCGetLocationsResponse.Expedited[0].Commitment[
+            i
+          ].Location[0].SDD[0];
+      }
+
+      if (
+        result.SDCGetLocationsResponse.Expedited[0].Commitment[i]
+          .MailClass[0] === "2"
+      ) {
+        dates.PriorityMail =
+          result.SDCGetLocationsResponse.Expedited[0].Commitment[
+            i
+          ].Location[0].SDD[0];
+      }
+    }
+
+    for (
+      let i = 0;
+      i < result.SDCGetLocationsResponse.NonExpedited.length;
+      i++
+    ) {
+      if (result.SDCGetLocationsResponse.NonExpedited[i].MailClass[0] === "3") {
+        dates.FirstClass =
+          result.SDCGetLocationsResponse.NonExpedited[i].SchedDlvryDate[0];
+      }
+    }
+  });
+
+  res.status(200).json(dates);
 };
 
 module.exports = {
