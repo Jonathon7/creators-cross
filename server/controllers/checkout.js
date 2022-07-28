@@ -252,7 +252,9 @@ const getDeliveryEstimate = async (req, res) => {
     }
   });
 
-  res.status(200).json(dates);
+  res
+    .status(200)
+    .json({ address: req.session.shippingAddress, options: dates });
 };
 
 module.exports = {
