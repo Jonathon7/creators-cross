@@ -37,7 +37,6 @@ export default function Category() {
     axios
       .get(`/api/category/${params.category}`)
       .then((res) => {
-        console.log(res.data);
         setCategory(res.data[0]);
       })
       .catch((err) => console.log(err));

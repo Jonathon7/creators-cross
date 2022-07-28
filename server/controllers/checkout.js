@@ -204,8 +204,6 @@ const getDeliveryEstimate = async (req, res) => {
     headers: { "Content-Type": "text/xml" },
   });
 
-  // console.log(response.data.SDCGetLocationsResponse);
-
   xml2js.parseString(response.data, (err, result) => {
     if (err) {
       throw err;
@@ -220,20 +218,22 @@ const getDeliveryEstimate = async (req, res) => {
         result.SDCGetLocationsResponse.Expedited[0].Commitment[i]
           .MailClass[0] === "1"
       ) {
-        dates.PriorityMailExpress =
-          result.SDCGetLocationsResponse.Expedited[0].Commitment[
-            i
-          ].Location[0].SDD[0];
+        dates.PriorityMailExpress = {
+          date: result.SDCGetLocationsResponse.Expedited[0].Commitment[i]
+            .Location[0].SDD[0],
+          price: 26.95,
+        };
       }
 
       if (
         result.SDCGetLocationsResponse.Expedited[0].Commitment[i]
           .MailClass[0] === "2"
       ) {
-        dates.PriorityMail =
-          result.SDCGetLocationsResponse.Expedited[0].Commitment[
-            i
-          ].Location[0].SDD[0];
+        dates.PriorityMail = {
+          date: result.SDCGetLocationsResponse.Expedited[0].Commitment[i]
+            .Location[0].SDD[0],
+          price: 8.7,
+        };
       }
     }
 
@@ -243,8 +243,11 @@ const getDeliveryEstimate = async (req, res) => {
       i++
     ) {
       if (result.SDCGetLocationsResponse.NonExpedited[i].MailClass[0] === "3") {
-        dates.FirstClass =
-          result.SDCGetLocationsResponse.NonExpedited[i].SchedDlvryDate[0];
+        dates.FirstClass = {
+          date: result.SDCGetLocationsResponse.NonExpedited[i]
+            .SchedDlvryDate[0],
+          price: 4.5,
+        };
       }
     }
   });

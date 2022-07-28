@@ -158,9 +158,8 @@ export default function AddressForm(props) {
           zip: !sameAsBilling ? billingZip : suggestedAddress.Zip5[0],
         },
       })
+      .then(() => props.handleNext())
       .catch((err) => console.log(err));
-
-    props.handleNext();
   };
 
   const continueAnyway = () => {
